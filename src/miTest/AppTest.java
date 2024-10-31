@@ -1,7 +1,7 @@
 /**
  * 
  */
-package paquete;
+package miTest;
 /**
  * @author lourdesarmenta
  *

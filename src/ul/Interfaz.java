@@ -18,25 +18,27 @@
  * @see ListadeContactos
  * @see Email
  */
-package uI;
+package ul;
 import java.util.Scanner;
 
 import negocios.ListadeContactos;
 import datos.Contacto;
 import datos.Email;
+import datos.Lista;
+import datos.PosicionIlegalException;
 
 public class Interfaz {
 	static Scanner entrada = new  Scanner(System.in);
 	static ListadeContactos ldc = new ListadeContactos();
 
-	public static void lectura() {
+	public static void lectura() throws PosicionIlegalException{
 		System.out.println("Bienvenido");
 		System.out.println("Por favor, escoja una de las siguientes opciones");
 		System.out.println("Para acceder a la opcion, escriba el número");
 		imprimirMenu();			
 	}
 
-	private static void imprimirMenu() {
+	private static void imprimirMenu() throws PosicionIlegalException{
 		int opcion = 0;
 		do{
 			System.out.println("Por favor, escoja una de las siguientes opciones ");
@@ -50,22 +52,31 @@ public class Interfaz {
 			System.out.println("0.- Salir");
 			System.out.println("*****************************");
 			opcion = entrada.nextInt();
+
 			switch  (opcion) {
 			case 1:
 				entrada.nextLine(); // solo limpia la cadena Scanner
-				validarAlta(); // si los datos que ingresa el usuario tiene el formato correcto
+				ldc.agregarContacto("Fernando", "Castro", 
+									"Laguna de catemaco 150 Ote. Las Quintas, Culiacán Sinaloa", 
+									"fernando@gmail.com", "6671234567", "6671234567");
+				//Agregar otro contacto
+				
+				ldc.mostrarTodosLosContactos();
+				Lista<Contacto> lista = new Lista<Contacto>();
+				System.out.println("\nMostrar todos los contactos: ");
+				for (int i = 0; i < lista.getTamanio(); i++) {
+					System.out.println("Nombre de Contacto: " + lista.getValor(i).getNombres());
+				}
+				//validarAlta();
 				break;
 			case 2:
-				// mostrar todos los contactos
 				mostrarContactos();
 				break;
 			case 3:
-				//modificar un contacto
 				entrada.nextLine(); // solo limpia la cadena Scanner
 				validarCambio();
 				break;
 			case 4:
-				//Eliminar un contactoentrada.nextLine(); // solo limpia la cadena Scanner
 				entrada.nextLine(); // solo limpia la cadena Scanner
 				validarBaja();
 				break;
@@ -78,9 +89,9 @@ public class Interfaz {
 			default:
 				System.out.println("Opción invalida");
 				break;		
-			} //fin de switch
-		} while (opcion !=5 ); //fin de do
-	} //fin de método
+			}
+		} while (opcion != 0 );
+	}
 
 	private static void salir() {
 		System.out.println("Sesion Finalizada");
@@ -88,7 +99,7 @@ public class Interfaz {
 		System.exit(0);
 	}
 
-	private static void validarAlta() {
+	private static void validarAlta() throws PosicionIlegalException{
 		try {
 			String nombres, apellidos, direccion, correo, telefono, celular;
 			while (true) {
@@ -167,7 +178,7 @@ public class Interfaz {
 		}
 	}
 
-	private static void validarCambio() {
+	private static void validarCambio() throws PosicionIlegalException{
 		try {
 			String nombres, apellidos, direccion, correo, telefono, celular;
 			while (true) {
@@ -216,7 +227,7 @@ public class Interfaz {
 		imprimirMenu();
 	}
 	
-	private static void validarBaja() {
+	private static void validarBaja() throws PosicionIlegalException{
 		String nombres, apellidos;
 		try {
 			while (true) {
@@ -246,7 +257,7 @@ public class Interfaz {
 		imprimirMenu();
 	}
 
-	public static void buscarContacto1() {
+	public static void buscarContacto1() throws PosicionIlegalException{
 		String nombre, apellido;
 		try {
 			System.out.print("NOMBRE: ");
