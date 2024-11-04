@@ -18,29 +18,27 @@
  * @see ListadeContactos
  * @see Email
  */
-package ul;
+package uI;
 import java.util.Scanner;
 
 import negocios.ListadeContactos;
 import datos.Contacto;
 import datos.Email;
-import datos.Lista;
-import datos.PosicionIlegalException;
 
 public class Interfaz {
 	static Scanner entrada = new  Scanner(System.in);
 	static ListadeContactos ldc = new ListadeContactos();
 
-	public static void lectura() throws PosicionIlegalException{
+	public static void lectura() {
 		System.out.println("Bienvenido");
 		System.out.println("Por favor, escoja una de las siguientes opciones");
 		System.out.println("Para acceder a la opcion, escriba el número");
 		imprimirMenu();			
 	}
 
-	private static void imprimirMenu() throws PosicionIlegalException{
+	private static void imprimirMenu() {
 		int opcion = 0;
-		do{
+		do {
 			System.out.println("Por favor, escoja una de las siguientes opciones ");
 			System.out.println("Para acceder a la opcion, escriba el número ");
 			System.out.println("****** MENU PRINCIPAL ******");
@@ -56,18 +54,7 @@ public class Interfaz {
 			switch  (opcion) {
 			case 1:
 				entrada.nextLine(); // solo limpia la cadena Scanner
-				ldc.agregarContacto("Fernando", "Castro", 
-									"Laguna de catemaco 150 Ote. Las Quintas, Culiacán Sinaloa", 
-									"fernando@gmail.com", "6671234567", "6671234567");
-				//Agregar otro contacto
-				
-				ldc.mostrarTodosLosContactos();
-				Lista<Contacto> lista = new Lista<Contacto>();
-				System.out.println("\nMostrar todos los contactos: ");
-				for (int i = 0; i < lista.getTamanio(); i++) {
-					System.out.println("Nombre de Contacto: " + lista.getValor(i).getNombres());
-				}
-				//validarAlta();
+				validarAlta();
 				break;
 			case 2:
 				mostrarContactos();
@@ -99,7 +86,7 @@ public class Interfaz {
 		System.exit(0);
 	}
 
-	private static void validarAlta() throws PosicionIlegalException{
+	private static void validarAlta() {
 		try {
 			String nombres, apellidos, direccion, correo, telefono, celular;
 			while (true) {
@@ -178,48 +165,50 @@ public class Interfaz {
 		}
 	}
 
-	private static void validarCambio() throws PosicionIlegalException{
+	private static void validarCambio() {
 		try {
-			String nombres, apellidos, direccion, correo, telefono, celular;
-			while (true) {
-				System.out.println("Modificar un contacto");
-				System.out.println("Por favor ingrese la información del contacto.");
-				System.out.println("El nombre y apellido deben existir.");
-				System.out.print("NOMBRES: ");
-				nombres = entrada.nextLine();
-				System.out.print("APELLIDOS: ");
-				apellidos = entrada.nextLine();
-		
-				if (ldc.buscarContacto(nombres, apellidos) == null) {
-					System.out.println("\nContacto no existe.");
-				}
-		
-				System.out.print("DOMICILIO: ");
-				direccion = entrada.nextLine();
-		
-				try {
-					System.out.print("CORREO: ");
-					correo = entrada.nextLine();
-					new Email(correo);
-				} catch (Exception e) {
-					System.out.println("Correo no válido.");
-					System.out.println("Si desea agregar nuevamente un contacto");
-					System.out.println("Seleccione la opción 1.");
-					return;
-				}
-		
-				System.out.print("TELÉFONO: ");
-				telefono = entrada.nextLine();
-				System.out.print("CELULAR: ");
-				celular = entrada.nextLine();
-
-				if (ldc.modificarContacto(nombres, apellidos, direccion, correo, telefono, celular)) {
-					System.out.println("Modificación Exitosa");
-					System.out.println("Lista de contactos");
-					ldc.mostrarTodosLosContactos();
-				} else {
-					System.out.println("No se pudo modificar el contacto"); //AQUI ME QUEDÉ, YO PUSE EL SYSOUT
-				}
+			System.out.println("Modificar Contacto");
+			System.out.print("Ingrese el nombre del contacto a modificar: ");
+			String nombres = entrada.nextLine();
+			System.out.print("Ingrese el apellido del contacto a modificar: ");
+			String apellidos = entrada.nextLine();
+	
+			if (ldc.buscarContacto(nombres, apellidos) == null) {
+				System.out.println("\nNo se encontró el contacto.");
+				System.out.println("Tamaño de la lista: " + ldc.tamanio());
+				System.out.println("--------------------------------------------------\n");
+				return;
+			}
+	
+			System.out.print("Nuevo domicilio: ");
+			String direccion = entrada.nextLine();
+			System.out.print("Nuevo correo: ");
+			String correo = entrada.nextLine();
+	
+			try {
+				new Email(correo);
+			} catch (Exception e) {
+				System.out.println("Correo no válido.");
+				return;
+			}
+	
+			System.out.print("Nuevo teléfono: ");
+			String telefono = entrada.nextLine();
+			System.out.print("Nuevo celular: ");
+			String celular = entrada.nextLine();
+	
+			boolean modificado = ldc.modificarContacto(
+				nombres, apellidos, direccion, correo, telefono, celular
+			);
+	
+			if (modificado) {
+				System.out.println("\nEl contacto ha sido modificado.");
+				System.out.println("Tamaño de la lista: " + ldc.tamanio());
+				System.out.println("--------------------------------------------------\n");
+			} else {
+				System.out.println("No se pudo modificar el contacto.");
+				System.out.println("Tamaño de la lista: " + ldc.tamanio());
+				System.out.println("--------------------------------------------------\n");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -227,29 +216,24 @@ public class Interfaz {
 		imprimirMenu();
 	}
 	
-	private static void validarBaja() throws PosicionIlegalException{
-		String nombres, apellidos;
+	private static void validarBaja() {
 		try {
-			while (true) {
-				System.out.println("\nEliminar Contacto");
-				System.out.println("Por favor ingrese la información del contacto.");
-				System.out.println("El nombre y apellido deben existir.");
-				System.out.print("NOMBRES: ");
-				nombres = entrada.nextLine();
-				System.out.print("APELLIDOS: ");
-				apellidos = entrada.nextLine();
-		
-				if (ldc.eliminarContacto(nombres, apellidos)) {
-					System.out.println("\nContacto eliminado.");
-					System.out.println("Lista de contactos: ");
-					ldc.mostrarTodosLosContactos();
-					System.out.println("--------------------------------------------------\n");
-				} else {
-					System.out.println("\nNo existe un Contacto con ese nombre y apellido.");
-					System.out.println("Si desea eliminar un contacto");
-					System.out.println("Ingrese un contacto con nombre y apellido.");
-					System.out.println("--------------------------------------------------\n");
-				}
+			System.out.println("\nEliminar Contacto");
+			System.out.print("Ingrese el nombre del contacto a eliminar: ");
+			String nombres = entrada.nextLine();
+			System.out.print("Ingrese el apellido del contacto a eliminar: ");
+			String apellidos = entrada.nextLine();
+	
+			boolean eliminado = ldc.eliminarContacto(nombres, apellidos);
+	
+			if (eliminado) {
+				System.out.println("\nEl contacto ha sido eliminado.");
+				System.out.println("Tamaño de la lista: " + ldc.tamanio());
+				System.out.println("--------------------------------------------------\n");
+			} else {
+				System.out.println("\nNo se encontró el contacto.");
+				System.out.println("Tamaño de la lista: " + ldc.tamanio());
+				System.out.println("--------------------------------------------------\n");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -257,7 +241,7 @@ public class Interfaz {
 		imprimirMenu();
 	}
 
-	public static void buscarContacto1() throws PosicionIlegalException{
+	public static void buscarContacto1() {
 		String nombre, apellido;
 		try {
 			System.out.print("NOMBRE: ");

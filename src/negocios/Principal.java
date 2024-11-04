@@ -1,8 +1,9 @@
 package negocios;
 
-import ul.Interfaz;
+import datos.PosicionIlegalException;
+import uI.Interfaz;
 public class Principal {
-	public static void main(String[] args) {
-		Interfaz.lectura();
-	}
+	public static void main(String[] args) throws PosicionIlegalException {
+        Interfaz.lectura();
+    }
 }
