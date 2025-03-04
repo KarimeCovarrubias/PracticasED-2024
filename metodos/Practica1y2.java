@@ -83,22 +83,31 @@ public class Practica1y2 {
         scanner.close();
         
         // Impresión de la matriz capturada
-        System.out.println("\nMatriz ingresada:");
-        for (int f = 0; f < orden; f++) {
-            for (int c = 0; c < orden + 1; c++) {
-                System.out.print(matrizA[f][c] + "\t");
-            }
-            System.out.println();
-        }
+        System.out.println("\nMatriz de Datos:");
+        imprimirMatriz(matrizA, orden);
 
+        //Matriz abajo
+        System.out.println("\nMatriz ceros abajo de la diagonal:");
+        metodoGaussJordanAbajo(matrizA, orden);
+
+        //Matriz arriba
+        //System.out.println("\nMatriz ceros abajo y arriba de la diagonal:");
+        //metodoGaussJordanArriba(matrizA, orden);
+
+        //Matriz diagonal
+        //System.out.println("\nMatriz identidad:");
+        //metodoGaussJordanDiagonal(matrizA, orden);
+    }
+
+    static void metodoGaussJordanAbajo(double[][] matrizA, int orden) {
         // Aplicación del método de Gauss-Jordan
+        double pivote, ecero;
         //ESTO ESTÁ BIEN
         for (int k = 0; k < orden; k++) {
-            double pivote = matrizA[k][k];
-            
+            pivote = matrizA[k][k];
             // Hacer ceros debajo del pivote
             for (int f = k + 1; f < orden; f++) {
-                double ecero = matrizA[f][k];
+                ecero = matrizA[f][k];
                 for (int c = 0; c <= orden; c++) {
                     pivote = matrizA[k][k];
                     matrizA[f][c] = (pivote * matrizA[f][c]) - (ecero * matrizA[k][c]);
@@ -122,12 +131,25 @@ public class Practica1y2 {
         */
         
         // Impresión de la matriz transformada
-        System.out.println("\nMatriz después de la eliminación de Gauss:");
+        imprimirMatriz(matrizA, orden);
+    }
+
+    static void metodoGaussJordanArriba(double[][] matrizA, int orden) {
+        //imprimirMatriz(matrizA, orden);
+    }
+
+    static void metodoGaussJordanDiagonal(double[][] matrizA, int orden) {
+        //imprimirMatriz(matrizA, orden);
+    }
+
+    static void imprimirMatriz(double[][] matrizA, int orden) {
+        System.out.println("-------------------------------------------------------");
         for (int f = 0; f < orden; f++) {
             for (int c = 0; c < orden + 1; c++) {
-                System.out.print(matrizA[f][c] + "\t");
+                System.out.printf("%-10.2f ", matrizA[f][c]);
             }
-            System.out.println();
+            System.out.printf("| %-10.2f\n", matrizA[f][orden]);
         }
+        System.out.println("-------------------------------------------------------");
     }
 }
