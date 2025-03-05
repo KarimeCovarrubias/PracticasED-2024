@@ -68,7 +68,8 @@ public class Practica1y2 {
     static void metodoGaussJordan() {
         // Captura de datos de la matriz
         System.out.print("Ingrese el orden de la matriz: ");
-        int orden = scanner.nextInt();
+        int orden = 3;
+        //int orden = scanner.nextInt();
         double[][] matrizA = new double[orden][orden + 1];
         
         // Llenado de la matriz
@@ -91,12 +92,12 @@ public class Practica1y2 {
         metodoGaussJordanAbajo(matrizA, orden);
 
         //Matriz arriba
-        //System.out.println("\nMatriz ceros abajo y arriba de la diagonal:");
-        //metodoGaussJordanArriba(matrizA, orden);
+        System.out.println("\nMatriz ceros abajo y arriba de la diagonal:");
+        metodoGaussJordanArriba(matrizA, orden);
 
         //Matriz diagonal
-        //System.out.println("\nMatriz identidad:");
-        //metodoGaussJordanDiagonal(matrizA, orden);
+        System.out.println("\nMatriz identidad:");
+        metodoGaussJordanUnitaria(matrizA, orden);
     }
 
     static void metodoGaussJordanAbajo(double[][] matrizA, int orden) {
@@ -109,7 +110,6 @@ public class Practica1y2 {
             for (int f = k + 1; f < orden; f++) {
                 ecero = matrizA[f][k];
                 for (int c = 0; c <= orden; c++) {
-                    pivote = matrizA[k][k];
                     matrizA[f][c] = (pivote * matrizA[f][c]) - (ecero * matrizA[k][c]);
                 }
             }
@@ -135,11 +135,27 @@ public class Practica1y2 {
     }
 
     static void metodoGaussJordanArriba(double[][] matrizA, int orden) {
-        //imprimirMatriz(matrizA, orden);
+        //ESTÁ MAL
+        double pivote, factor;
+        for (int k = orden; k <= 2; k++) {
+            pivote = matrizA[k][k];
+            for (int f = 1; f <= k-1; f++) {
+                factor = matrizA[f][k] / pivote;
+                for (int c = k; c <= orden+1; c++) {
+                    matrizA[f][c] =  matrizA[f][c] - (factor * matrizA[k][c]);
+                }
+            }
+        }
+        imprimirMatriz(matrizA, orden);
     }
 
-    static void metodoGaussJordanDiagonal(double[][] matrizA, int orden) {
-        //imprimirMatriz(matrizA, orden);
+    static void metodoGaussJordanUnitaria(double[][] matrizA, int orden) {
+        //ESTÁ MAL
+        for (int f = 1; f <= orden; f++) {
+            matrizA[f][orden+1] = matrizA[f][orden+1] / matrizA[f][f];
+            matrizA[f][f] = matrizA[f][f] / matrizA[f][f];
+        }
+        imprimirMatriz(matrizA, orden);
     }
 
     static void imprimirMatriz(double[][] matrizA, int orden) {
