@@ -1,17 +1,19 @@
 package metodos;
 
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class Practica1y2 {
-    static Scanner scanner = new Scanner(System.in);
-    static int orden;
-    static String pregunta, concepto, unidad;
+    static Scanner leer = new Scanner(System.in);
+    static DecimalFormat formato = new DecimalFormat("#,###.##");
     public static void main(String[] args) {
         //
-        metodoGaussJordan();
+        pantallaInicio();
     }
 
     public static void pantallaInicio() {
+        int orden;
+        String pregunta, unidad;
         System.out.println("\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
                             "\n\t\t\t\t\tIng. En Sistemas Computacionales" +
                             "\n\nCovarrubias Osuna Dairy Karime." +
@@ -22,67 +24,85 @@ public class Practica1y2 {
                             "\n\t\t\t\t\tuna ecuación con diversos métodos numéricos." +
                             "\n\n");
         System.out.println("Un Fabricante de muebles requiere realizar una investigación sobre los tiempos requeridos para el acabado y terminación" + 
-                            "de cada mueble que fabrica; Mesas, Sillas, y Bancos. Se supervisan los tiempos incurridos en lijar, pintar y barnizar cada mueble.\n" + 
-                            "Se registra la siguiente informacion de investigacion.\n" + 
+                            "\nde cada mueble que fabrica; Mesas, Sillas, y Bancos. Se supervisan los tiempos incurridos en lijar, pintar y barnizar cada mueble.\n" + 
+                            "\nSe registra la siguiente informacion de investigacion.\n" + 
                             "\t- Se necesitan 10 minutos para lijar una Mesa, 6 minutos para pintarla y 12 minutos para barnizarla.\n" + 
                             "\t- Se necesitan 12 minutos para lijar una Silla, 8 minutos para pintarla y 12 minutos para barnizarla.\n" +
                             "\t- Se necesitan 15 minutos para lijar un Banco, 12 minutos para pintarlo y 18 minutos para barnizarlo.\n" +
                             "La mesa de lijado se utilizo 16 horas a la semana, la mesa de pintado se utilizo 11 horas a la semana y la mesa de barnizado se utilizo 18 horas a la semana.");
         System.out.print("\nPREGUNTA DEL PROBLEMA: ");
-        pregunta = Keyboard.readString();
-        System.out.print("\nORDEN: ");
-        orden = Keyboard.readInt();
-        for (int i = 1; i < orden; i++) {
-            System.out.print("\nCONCEPTO DEL PROBLEMA: ");
-            concepto = Keyboard.readString();
-            System.out.print("UNIDAD: ");
-            unidad = Keyboard.readString();
+        pregunta = leer.next();
+        System.out.print("ORDEN: 3");
+        orden = 3; //leer.nextInt();
+        System.out.println();
+
+        String[] concepto = new String[orden];
+        for (int i = 0; i < orden; i++) {
+            System.out.print("CONCEPTO DEL PROBLEMA: ");
+            concepto[i] = leer.next();
         }
+        System.out.print("UNIDAD: ");
+        unidad = leer.next(); 
+
+        double[][] matrizA = new double[orden][orden + 1];
+        datos(matrizA, orden);
+
         System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------\n");
-        menu();
+        menu(matrizA, concepto, orden, unidad, pregunta);
     }
 
-    static void menu() {
+    static void menu(double[][] matrizA, String[] concepto, int orden, String unidad, String pregunta) {
         int opc;
         do {
-            System.out.println("1.MÉTODO DE GAUSS-JORDAN \n2.MÉTODO DE JACOBI \n10.FIN");
+            System.out.println("\n\t\t\t\t-----------------------------------MENÚ-----------------------------------");
+            System.out.println("1.MÉTODO DE GAUSS-JORDAN \n2.MÉTODO DE GAUSS-SEIDEL \n10.FIN");
             System.out.print("ESCOJA UNA OPCIÓN: ");
-            opc = Keyboard.readInt();
+            opc = leer.nextInt();
             switch (opc) {
                 case 1:
-                    metodoGaussJordan();
+                    System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------\n");
+                    System.out.println("\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
+                                        "\n\t\t\t\t\tIng. En Sistemas Computacionales" +
+                                        "\n\nCovarrubias Osuna Dairy Karime." +
+                                        "\nSolución de sistemas de ecuaciones: Método de Gauss-Jordan." + 
+                                        "\nDe 12:00 a 13:00 horas." +
+                                        "\n");
+                    System.out.print("PREGUNTA: " + pregunta + "\n");
+                    metodoGaussJordan(matrizA, concepto, orden, unidad);
                     break;
                 case 2:
-                    //metodoJacobi();
+                    System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------\n");
+                    System.out.println("\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
+                                        "\n\t\t\t\t\tIng. En Sistemas Computacionales" +
+                                        "\n\nCovarrubias Osuna Dairy Karime." +
+                                        "\nSolución de sistemas de ecuaciones: Método de Gauss-Seidel." + 
+                                        "\nDe 12:00 a 13:00 horas." +
+                                        "\n");
+                    System.out.print("PREGUNTA: " + pregunta + "\n");
+                    //metodoGaussSeidel();
                     break;
                 case 10:
                     System.out.println("¡ADIÓS!");
                     break;
                 default:
-                System.out.println("OPCIÓN INVÁLIDA. ESCOJA OTRA OPCIÓN.");
+                    System.out.println("OPCIÓN INVÁLIDA. ESCOJA OTRA OPCIÓN.");
                 break;
             }
         } while (opc != 10);
     }
 
-    static void metodoGaussJordan() {
-        // Captura de datos de la matriz
-        System.out.print("Ingrese el orden de la matriz: ");
-        int orden = 3;
-        //int orden = scanner.nextInt();
-        double[][] matrizA = new double[orden][orden + 1];
-        
+    static void datos(double[][] matrizA, int orden) {
         // Llenado de la matriz
+        System.out.println();
         for (int f = 0; f < orden; f++) {
             for (int c = 0; c < orden + 1; c++) {
-                System.out.print("Ingrese el valor de MatrizA[" + (f + 1) + "][" + (c + 1) + "]: ");
-                matrizA[f][c] = scanner.nextDouble();
+                System.out.print("Ingrese el valor de x" + (f + 1) + (c + 1) + ": ");
+                matrizA[f][c] = leer.nextDouble();
             }
         }
-        
-        // Cierre del scanner
-        scanner.close();
-        
+    }
+
+    static void metodoGaussJordan(double[][] matrizA, String[] concepto, int orden, String unidad) {
         // Impresión de la matriz capturada
         System.out.println("\nMatriz de Datos:");
         imprimirMatriz(matrizA, orden);
@@ -98,6 +118,10 @@ public class Practica1y2 {
         //Matriz diagonal
         System.out.println("\nMatriz identidad:");
         metodoGaussJordanUnitaria(matrizA, orden);
+
+        //Resultados
+        System.out.println("\nResultados:");
+        resultados(matrizA, orden, concepto, unidad);
     }
 
     static void metodoGaussJordanAbajo(double[][] matrizA, int orden) {
@@ -135,37 +159,67 @@ public class Practica1y2 {
     }
 
     static void metodoGaussJordanArriba(double[][] matrizA, int orden) {
-        //ESTÁ MAL
         double pivote, factor;
-        for (int k = orden; k <= 2; k++) {
+
+        for (int k = orden - 1; k >= 0; k--) {
             pivote = matrizA[k][k];
-            for (int f = 1; f <= k-1; f++) {
+            for (int f = k - 1; f >= 0; f--) {
                 factor = matrizA[f][k] / pivote;
-                for (int c = k; c <= orden+1; c++) {
-                    matrizA[f][c] =  matrizA[f][c] - (factor * matrizA[k][c]);
+                for (int c = 0; c <= orden; c++) {
+                    matrizA[f][c] -= factor * matrizA[k][c];
                 }
             }
         }
+
+        //ESTÁ MAL
+        // for (int k = orden; k <= 2; k++) {
+        //     pivote = matrizA[k][k];
+        //     for (int f = 1; f <= k-1; f++) {
+        //         factor = matrizA[f][k] / pivote;
+        //         for (int c = k; c <= orden+1; c++) {
+        //             matrizA[f][c] =  matrizA[f][c] - (factor * matrizA[k][c]);
+        //         }
+        //     }
+        // }
         imprimirMatriz(matrizA, orden);
     }
 
     static void metodoGaussJordanUnitaria(double[][] matrizA, int orden) {
-        //ESTÁ MAL
-        for (int f = 1; f <= orden; f++) {
-            matrizA[f][orden+1] = matrizA[f][orden+1] / matrizA[f][f];
-            matrizA[f][f] = matrizA[f][f] / matrizA[f][f];
+        double diagonal;
+        for (int i = 0; i < orden; i++) {
+            diagonal = matrizA[i][i];
+            for (int j = 0; j <= orden; j++) {
+                matrizA[i][j] /= diagonal;
+            }
         }
+
+        //ESTÁ MAL
+        // for (int f = 1; f <= orden; f++) {
+        //     matrizA[f][orden+1] = matrizA[f][orden+1] / matrizA[f][f];
+        //     matrizA[f][f] = matrizA[f][f] / matrizA[f][f];
+        // }
         imprimirMatriz(matrizA, orden);
     }
 
     static void imprimirMatriz(double[][] matrizA, int orden) {
         System.out.println("-------------------------------------------------------");
         for (int f = 0; f < orden; f++) {
-            for (int c = 0; c < orden + 1; c++) {
+            for (int c = 0; c < orden; c++) {
                 System.out.printf("%-10.2f ", matrizA[f][c]);
             }
             System.out.printf("| %-10.2f\n", matrizA[f][orden]);
         }
         System.out.println("-------------------------------------------------------");
+    }
+
+    static void resultados(double[][] matrizA, int orden, String[] concepto, String unidad) {
+        for (int i = 0; i < orden; i++) {
+            System.out.print(concepto[i] + " = " + matrizA[i][orden] + " " + unidad + ". \n");
+        }
+    }
+
+// ---------------------------------------------- MÉTODO GAUSS-SEIDEL ----------------------------------------------
+    static void metodoGaussSeidel() {
+        //
     }
 }
