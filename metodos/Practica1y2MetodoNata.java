@@ -242,8 +242,7 @@ public class Practica1y2MetodoNata {
         if (errorTotal <= error) { 
             System.out.println("\nResultados:"); 
             for (int p = 1; p <= orden; p++) { 
-                System.out.println(concepto[p] + " = " + vant[p] + " " + unidad);
-                System.out.println(concepto[p] + " = " + Math.round(vant[p]) + " " + unidad);
+                System.out.println(concepto[p] + " = " + vant[p] + " " + unidad + " = " + Math.round(vant[p]) + " " + unidad);
             }
         } else { 
             System.out.println("El proceso superó el número máximo de cálculos y no encontró la mejor aproximación.");
