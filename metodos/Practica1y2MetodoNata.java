@@ -18,7 +18,7 @@ public class Practica1y2MetodoNata {
         String pregunta, unidad;
         
         System.out.print("\nPREGUNTA DEL PROBLEMA: ");
-        pregunta = leer.next();
+        pregunta = leer.nextLine();
         System.out.print("ORDEN: 3");
         orden = 3; //leer.nextInt();
         System.out.println();
@@ -168,9 +168,9 @@ public class Practica1y2MetodoNata {
             vant[f] = leer.nextDouble();
             vact[f] = 0;
         }
-        System.out.println("Ingrese el error: ");
+        System.out.print("Ingrese el error: ");
         double error = leer.nextDouble();
-        System.out.println("Ingrese el total de cálculos: ");
+        System.out.print("Ingrese el total de cálculos: ");
         int tc = leer.nextInt();
         System.out.println("------------------------------------------------------------------");
 
@@ -184,9 +184,9 @@ public class Practica1y2MetodoNata {
         System.out.println("Impresión del Encabezado incluyendo la pregunta y la información " +
                             "tabular de los datos a generar" +
                             "\nImpresión de los datos iníciales de las incógnitas");
-        System.out.println("\nPREGUNTA: " + pregunta);
+        System.out.print("\nPREGUNTA: " + pregunta);
         
-        System.out.println(" ");
+        System.out.println();
         int nc = 0;
         double errorTotal = 0;
 
