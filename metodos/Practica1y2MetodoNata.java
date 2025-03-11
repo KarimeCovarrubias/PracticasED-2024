@@ -120,7 +120,6 @@ public class Practica1y2MetodoNata {
 
     static void metodoGaussJordanArriba(double[][] matrizA, int orden) {
         double pivote, factor;
-        //chatgpt
         for (int k = orden; k >= 2; k--) { // Corrección: debe ser de orden a 1
             pivote = matrizA[k][k];
             for (int f = k - 1; f >= 1; f--) {
@@ -171,80 +170,85 @@ public class Practica1y2MetodoNata {
         }
         System.out.println("Ingrese el error: ");
         double error = leer.nextDouble();
-        System.out.println("Ingrese el total de cálculos: 50");
+        System.out.println("Ingrese el total de cálculos: ");
         int tc = leer.nextInt();
         System.out.println("------------------------------------------------------------------");
 
-        for (int f = 1; f <= orden; f++) { 
-            for (int c = 1; c <= orden + 1; c++) { 
-                System.out.print("Inserte el dato x" + f + "" + c + ": "); 
-                matriz[f][c] = leer.nextDouble(); 
+        for (int f = 1; f <= orden; f++) {
+            for (int c = 1; c <= orden + 1; c++) {
+                System.out.print("Inserte el dato x" + f + "" + c + ": ");
+                matriz[f][c] = leer.nextDouble();
             }
         }
 
-        System.out.println("Impresión del Encabezado incluyendo la pregunta y la información " + 
+        System.out.println("Impresión del Encabezado incluyendo la pregunta y la información " +
                             "tabular de los datos a generar" +
                             "\nImpresión de los datos iníciales de las incógnitas");
-        System.out.println("\nPREGUNTA: " + pregunta); 
-        System.out.println(" "); 
+        System.out.println("\nPREGUNTA: " + pregunta);
+        
+        System.out.println(" ");
         int nc = 0;
         double errorTotal = 0;
 
-        System.out.println("Número de cálculo = " + nc);
-        for (int f = 1; f <= orden; f++) { 
+        //System.out.println("Número de cálculo = " + nc);
+        for (int f = 1; f <= orden; f++) {
             System.out.println(vant[f]);
         }
         System.out.println("Error Total = " + errorTotal);
 
-        System.out.println("Calcula el valor de las incógnitas y las guarda en el Vector de " + 
+        System.out.println("Calcula el valor de las incógnitas y las guarda en el Vector de " +
                             "Valores Actuales para ser comparadas con los Valores anteriores");
-        do { 
-            for (int f = 1; f <= orden; f++) { 
-                double suma = 0; 
-                double coef = matriz[f][f]; 
-                suma = suma + matriz[f][orden + 1]; 
-                for (int c = 1; c <= orden; c++) { 
-                    if (f == c) { 
-                    } else if (c < f) { 
-                        suma = suma + ((matriz[f][c] * (-1.0)) * vact[c]); 
-                    } else { 
-                        suma = suma + ((matriz[f][c] * (-1.0)) * vant[c]); 
-                    } 
+        do {
+            for (int f = 1; f <= orden; f++) {
+                double suma = 0;
+                double coef = matriz[f][f];
+                suma = suma + matriz[f][orden + 1];
+                for (int c = 1; c <= orden; c++) {
+                    if (f == c) {
+                    } else if (c < f) {
+                        suma = suma + ((matriz[f][c] * (-1.0)) * vact[c]);
+                    } else {
+                        suma = suma + ((matriz[f][c] * (-1.0)) * vant[c]);
+                    }
+                }
+                suma = suma / coef;
+                vact[f] = suma;
+            }
+
+            //System.out.println("\nCálculo del Error Total Absoluto: ");
+            errorTotal = 0;
+            for (int p = 1; p <= orden; p++) {
+                errorTotal = errorTotal + Math.abs(Math.abs(vact[p]) - Math.abs(vant[p]));
+            }
+
+            if (nc == 0) {
+                System.out.println("\n--------------------------------------------------------------------------------------");
+                System.out.printf("%-5s", "#");
+                for (int i = 1; i <= orden; i++) {
+                    System.out.printf(" | %-15s", concepto[i]);
                 } 
-                suma = suma / coef; 
-                vact[f] = suma; 
+                System.out.printf(" | %-15s |\n", "Error Total");
+                System.out.println("--------------------------------------------------------------------------------------");
             }
 
-            System.out.println("\nCálculo del Error Total Absoluto: ");
-            errorTotal = 0; 
-            for (int p = 1; p <= orden; p++) { 
-                errorTotal = errorTotal + Math.abs(Math.abs(vact[p]) - Math.abs(vant[p])); 
-            }
+            //System.out.println("\nImpresión de nuevos cálculos: ");
+            System.out.println("");
+            nc = nc + 1;
 
-            if (nc == 0) { 
-                for (int i = 1; i <= orden; i++) { 
-                    System.out.print("\t|\t\t" + concepto[i]); 
-                } 
+            System.out.printf("%-5d", nc);
+            for (int p = 1; p <= orden; p++) {
+                System.out.printf(" | %-15s", formato.format(vact[p]));
+                vant[p] = vact[p];
             }
-
-            System.out.println("\nImpresión de nuevos cálculos: ");
-            System.out.println(""); 
-            nc = nc + 1; 
-            System.out.print(nc + "\t|");
-
-            for (int p = 1; p <= orden; p++) { 
-                System.out.print("\t" + formato.format(vact[p]) + "\t|"); 
-                vant[p] = vact[p]; 
-            }
-            System.out.println("\t" + formato.format(errorTotal) + "\t|"); 
+            System.out.printf(" | %-15s |\n", formato.format(errorTotal));
         } while (errorTotal > error && nc <= tc);
 
-        if (errorTotal <= error) { 
-            System.out.println("\nResultados:"); 
-            for (int p = 1; p <= orden; p++) { 
+        if (errorTotal <= error) {
+            System.out.println("\nResultados:");
+            for (int p = 1; p <= orden; p++) {
                 System.out.println(concepto[p] + " = " + vant[p] + " " + unidad + " = " + Math.round(vant[p]) + " " + unidad);
             }
-        } else { 
+        } else {
             System.out.println("El proceso superó el número máximo de cálculos y no encontró la mejor aproximación.");
         }
     }
