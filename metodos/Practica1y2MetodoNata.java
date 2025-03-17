@@ -80,31 +80,17 @@ public class Practica1y2MetodoNata {
     }
 
     static void metodoGaussJordan(double[][] matrizA, String[] concepto, int orden, String unidad) {
+        double pivote, ecero, factor;
+
+        // Introducir datos
         datos(matrizA, orden);
+
         // Impresión de la matriz capturada
         System.out.println("\nMatriz de Datos:");
         imprimirMatriz(matrizA, orden);
 
         //Matriz abajo
         System.out.println("\nMatriz ceros abajo de la diagonal:");
-        metodoGaussJordanAbajo(matrizA, orden);
-
-        //Matriz arriba
-        System.out.println("\nMatriz ceros abajo y arriba de la diagonal:");
-        metodoGaussJordanArriba(matrizA, orden);
-
-        //Matriz diagonal
-        System.out.println("\nMatriz identidad:");
-        metodoGaussJordanUnitaria(matrizA, orden);
-
-        //Resultados
-        System.out.println("\nResultados:");
-        resultados(matrizA, orden, concepto, unidad);
-    }
-
-    static void metodoGaussJordanAbajo(double[][] matrizA, int orden) {
-        // // Aplicación del método de Gauss-Jordan
-        double pivote, ecero;
         for (int k = 1; k <= orden-1; k++) {
             pivote = matrizA[k][k];
             for (int f = k + 1; f <= orden; f++) {
@@ -115,13 +101,11 @@ public class Practica1y2MetodoNata {
                 }
             }
         }
-        // Impresión de la matriz transformada
         imprimirMatriz(matrizA, orden);
-    }
 
-    static void metodoGaussJordanArriba(double[][] matrizA, int orden) {
-        double pivote, factor;
-        for (int k = orden; k >= 2; k--) { // Corrección: debe ser de orden a 1
+        //Matriz arriba
+        System.out.println("\nMatriz ceros abajo y arriba de la diagonal:");
+        for (int k = orden; k >= 2; k--) {
             pivote = matrizA[k][k];
             for (int f = k - 1; f >= 1; f--) {
                 factor = matrizA[f][k] / pivote;
@@ -131,32 +115,33 @@ public class Practica1y2MetodoNata {
             }
         }
         imprimirMatriz(matrizA, orden);
-    }
 
-    static void metodoGaussJordanUnitaria(double[][] matrizA, int orden) {
+        //Matriz diagonal
+        System.out.println("\nMatriz identidad:");
         for (int f = 1; f <= orden; f++) {
             matrizA[f][orden+1] = matrizA[f][orden+1] / matrizA[f][f];
             matrizA[f][f] = matrizA[f][f] / matrizA[f][f];
         }
         imprimirMatriz(matrizA, orden);
+
+        //Resultados
+        System.out.println("\nResultados:");
+        for (int i = 1; i <= orden; i++) {
+            System.out.printf("%s = %.2f %s. \n", concepto[i], matrizA[i][orden+1], unidad);
+        }
     }
 
     static void imprimirMatriz(double[][] matrizA, int orden) {
         System.out.println("-------------------------------------------------------");
         for (int f = 1; f <= orden; f++) {
-            for (int c = 1; c <= orden + 1; c++) {
+            for (int c = 1; c <= orden; c++) {
                 System.out.printf("%-10.2f ", matrizA[f][c]);
             }
-            System.out.println();
+            System.out.print("| ");
+            System.out.printf("%-20.2f\n", matrizA[f][orden + 1]);
         }
         System.out.println("-------------------------------------------------------");
-    }
-
-    static void resultados(double[][] matrizA, int orden, String[] concepto, String unidad) {
-        for (int i = 1; i <= orden; i++) {
-            System.out.print(concepto[i] + " = " + matrizA[i][orden+1] + " " + unidad + ". \n");
-        }
-    }
+    }    
 
 // ---------------------------------------------- MÉTODO GAUSS-SEIDEL ----------------------------------------------
     static void metodoGaussSeidel(int orden, String pregunta, String[] concepto, String unidad) {
@@ -175,12 +160,7 @@ public class Practica1y2MetodoNata {
         int tc = leer.nextInt();
         System.out.println("------------------------------------------------------------------");
 
-        for (int f = 1; f <= orden; f++) {
-            for (int c = 1; c <= orden + 1; c++) {
-                System.out.print("Inserte el dato x" + f + "" + c + ": ");
-                matriz[f][c] = leer.nextDouble();
-            }
-        }
+        datos(matriz, orden);
 
         // Intercambiar filas para hacer dominante la diagonal
         for (int i = 1; i <= orden; i++) {
@@ -255,12 +235,12 @@ public class Practica1y2MetodoNata {
             }
             System.out.printf(" | %-15s |\n", formato.format(errorTotal));
         } while (errorTotal > error && nc <= tc);
-        System.out.println("-----------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------");
 
         if (errorTotal <= error) {
             System.out.println("\nResultados:");
             for (int p = 1; p <= orden; p++) {
-                System.out.println(concepto[p] + " = " + vant[p] + " " + unidad + " = " + formato.format(Math.round(vant[p])) + " " + unidad);
+                System.out.println(concepto[p] + " = " + formato.format(vant[p]) + " " + unidad + " = " + formato.format(Math.round(vant[p])) + " " + unidad);
             }
         } else {
             System.out.println("El proceso superó el número máximo de cálculos y no encontró la mejor aproximación.");
