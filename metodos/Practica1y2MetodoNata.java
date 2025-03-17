@@ -1,6 +1,7 @@
 package metodos;
 
-// FALTA ACOMODAR LA TABLA metodoGaussSeidel
+// FALTA ACOMODAR LA TABLA metodoGaussJordan
+// FALTA PONER MIS DATOS EN CADA MÉTODO Y EN LA PANTALLA DE INICIO
 
 import java.util.Scanner;
 import java.text.DecimalFormat;
