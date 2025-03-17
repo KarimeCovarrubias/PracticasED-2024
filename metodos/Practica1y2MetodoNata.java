@@ -49,14 +49,10 @@ public class Practica1y2MetodoNata {
             switch (opc) {
                 case 1:
                     System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------\n");
-                    
-                    System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
-                    metodoGaussJordan(matrizA, concepto, orden, unidad);
+                    metodoGaussJordan(matrizA, concepto, orden, unidad, pregunta);
                     break;
                 case 2:
                     System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------\n");
-                    
-                    System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
                     metodoGaussSeidel(orden, pregunta, concepto, unidad);
                     break;
                 case 10:
@@ -80,7 +76,7 @@ public class Practica1y2MetodoNata {
         }
     }
 
-    static void metodoGaussJordan(double[][] matrizA, String[] concepto, int orden, String unidad) {
+    static void metodoGaussJordan(double[][] matrizA, String[] concepto, int orden, String unidad, String pregunta) {
         double pivote, ecero, factor;
 
         // Introducir datos
@@ -116,6 +112,17 @@ public class Practica1y2MetodoNata {
             }
         }
         imprimirMatriz(matrizA, orden);
+
+        System.out.println("\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
+                            "\n\t\t\t\t\tIng. En Sistemas Computacionales" +
+                            "\n\nCovarrubias Osuna Dairy Karime." +
+                            "\nSolución de ecuaciones." + 
+                            "\nDe 12:00 a 13:00 horas." + "Método de Gauss-Jordan" +
+                            "\n\n\t\t\t\t\tEste programa ejecuta la solución de problemas" +
+                            "\n\t\t\t\t\tutilizando los procesos lógicos de Solución de sistemas" +
+                            "\n\t\t\t\t\tde Ecuaciones utilizando diversos métodos numéricos." +
+                            "\n\n");
+        System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
 
         //Matriz diagonal
         System.out.println("\nMatriz identidad:");
@@ -181,7 +188,16 @@ public class Practica1y2MetodoNata {
         //System.out.println("Impresión del Encabezado incluyendo la pregunta y la información " +
                             //"tabular de los datos a generar" +
                             //"\nImpresión de los datos iníciales de las incógnitas");
-        System.out.print("\nPREGUNTA: ¿" + pregunta + "?");
+        System.out.println("\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
+                            "\n\t\t\t\t\tIng. En Sistemas Computacionales" +
+                            "\n\nCovarrubias Osuna Dairy Karime." +
+                            "\nSolución de ecuaciones." + 
+                            "\nDe 12:00 a 13:00 horas." + "Método de Gauss-Seidel" +
+                            "\n\n\t\t\t\t\tEste programa ejecuta la solución de problemas" +
+                            "\n\t\t\t\t\tutilizando los procesos lógicos de Solución de sistemas" +
+                            "\n\t\t\t\t\tde Ecuaciones utilizando diversos métodos numéricos." +
+                            "\n\n");
+        System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
 
         System.out.println();
         int nc = 0;
