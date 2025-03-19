@@ -172,16 +172,16 @@ public class Practica1y2MetodoNata {
 
         // Intercambiar filas para hacer dominante la diagonal
         for (int i = 1; i <= orden; i++) {
-            int maxFila = i;
+            int dominante = i;
             for (int j = i + 1; j <= orden; j++) {
-                if (Math.abs(matriz[j][i]) > Math.abs(matriz[maxFila][i])) {
-                    maxFila = j;
+                if (Math.abs(matriz[j][i]) > Math.abs(matriz[dominante][i])) {
+                    dominante = j;
                 }
             }
-            if (maxFila != i) {
+            if (dominante != i) {
                 double[] temp = matriz[i];
-                matriz[i] = matriz[maxFila];
-                matriz[maxFila] = temp;
+                matriz[i] = matriz[dominante];
+                matriz[dominante] = temp;
             }
         }
 
