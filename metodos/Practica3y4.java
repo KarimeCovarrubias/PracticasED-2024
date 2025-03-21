@@ -1,6 +1,6 @@
 package metodos;
 
-// FALTA ACOMODAR LA TABLA metodoGaussJordan
+// CHECAR GAUSS-SEIDEL
 
 import java.util.Scanner;
 import java.text.DecimalFormat;
