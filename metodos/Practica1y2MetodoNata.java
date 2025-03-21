@@ -6,11 +6,19 @@ import java.util.Scanner;
 import java.text.DecimalFormat;
 import metodos.Keyboard;
 
-public class Practica1y2MetodoNata {
+public class Practica3y4 {
     static Scanner leer = new Scanner(System.in);
     static DecimalFormat formato = new DecimalFormat("#,###.###");
     public static void main(String[] args) {
-        //
+        System.out.println("\n\n\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
+                            "\n\t\t\tIng. En Sistemas Computacionales" +
+                            "\n\nCovarrubias Osuna Dairy Karime." +
+                            "\nSolución de ecuaciones." + 
+                            "\nDe 12:00 a 13:00 horas. ");
+        System.out.printf("\t%70s%n \t%70s%n \t%70s%n", "Este programa ejecuta la solución de problemas",
+                            "utilizando los procesos lógicos de Solución de sistemas",
+                            "de Ecuaciones utilizando diversos métodos numéricos.",
+                            "");
         pantallaInicio();
     }
 
@@ -81,6 +89,16 @@ public class Practica1y2MetodoNata {
         // Introducir datos
         datos(matrizA, orden);
 
+        System.out.println("\n\n\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
+                            "\n\t\t\tIng. En Sistemas Computacionales" +
+                            "\n\nCovarrubias Osuna Dairy Karime." +
+                            "\nSolución de ecuaciones." + 
+                            "\nDe 12:00 a 13:00 horas. " + "\nMétodo de Gauss-Jordan");
+        System.out.printf("\t%70s%n \t%70s%n \t%70s%n", "Este programa ejecuta la solución de problemas",
+                            "utilizando los procesos lógicos de Solución de sistemas",
+                            "de Ecuaciones utilizando diversos métodos numéricos.");
+        System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
+
         // Impresión de la matriz capturada
         System.out.println("\nMatriz de Datos:");
         imprimirMatriz(matrizA, orden);
@@ -112,17 +130,6 @@ public class Practica1y2MetodoNata {
         }
         imprimirMatriz(matrizA, orden);
 
-        System.out.println("\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
-                            "\n\t\t\t\t\tIng. En Sistemas Computacionales" +
-                            "\n\nCovarrubias Osuna Dairy Karime." +
-                            "\nSolución de ecuaciones." + 
-                            "\nDe 12:00 a 13:00 horas." + "Método de Gauss-Jordan" +
-                            "\n\n\t\t\t\t\tEste programa ejecuta la solución de problemas" +
-                            "\n\t\t\t\t\tutilizando los procesos lógicos de Solución de sistemas" +
-                            "\n\t\t\t\t\tde Ecuaciones utilizando diversos métodos numéricos." +
-                            "\n\n");
-        System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
-
         //Matriz diagonal
         System.out.println("\nMatriz identidad:");
         for (int f = 1; f <= orden; f++) {
@@ -139,16 +146,16 @@ public class Practica1y2MetodoNata {
     }
 
     static void imprimirMatriz(double[][] matrizA, int orden) {
-        System.out.println("-------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------");
         for (int f = 1; f <= orden; f++) {
             for (int c = 1; c <= orden; c++) {
-                System.out.printf("%-10.2f ", matrizA[f][c]);
+                System.out.printf("%-15.2f ", matrizA[f][c]);
             }
             System.out.print("| ");
-            System.out.printf("%-20.2f\n", matrizA[f][orden + 1]);
+            System.out.printf("%-15.2f\n", matrizA[f][orden + 1]);
         }
-        System.out.println("-------------------------------------------------------");
-    }    
+        System.out.println("-------------------------------------------------------------------------------------");
+    }
 
 // ---------------------------------------------- MÉTODO GAUSS-SEIDEL ----------------------------------------------
     static void metodoGaussSeidel(int orden, String pregunta, String[] concepto, String unidad) {
