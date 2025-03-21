@@ -83,6 +83,7 @@ public class Practica3y4 {
         }
     }
 
+// ---------------------------------------------- MÉTODO GAUSS-JORDAN ----------------------------------------------    
     static void metodoGaussJordan(double[][] matrizA, String[] concepto, int orden, String unidad, String pregunta) {
         double pivote, ecero, factor;
 
