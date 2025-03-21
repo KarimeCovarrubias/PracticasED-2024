@@ -1,7 +1,6 @@
 package metodos;
 
 // FALTA ACOMODAR LA TABLA metodoGaussJordan
-// FALTA PONER MIS DATOS EN CADA MÉTODO Y EN LA PANTALLA DE INICIO
 
 import java.util.Scanner;
 import java.text.DecimalFormat;
@@ -185,9 +184,6 @@ public class Practica1y2MetodoNata {
             }
         }
 
-        //System.out.println("Impresión del Encabezado incluyendo la pregunta y la información " +
-                            //"tabular de los datos a generar" +
-                            //"\nImpresión de los datos iníciales de las incógnitas");
         System.out.println("\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
                             "\n\t\t\t\t\tIng. En Sistemas Computacionales" +
                             "\n\nCovarrubias Osuna Dairy Karime." +
@@ -208,8 +204,6 @@ public class Practica1y2MetodoNata {
         }
         System.out.println("Error Total = " + errorTotal);
 
-        //System.out.println("Calcula el valor de las incógnitas y las guarda en el Vector de " +
-                            //"Valores Actuales para ser comparadas con los Valores anteriores");
         do {
             for (int f = 1; f <= orden; f++) {
                 double suma = 0;
@@ -218,9 +212,9 @@ public class Practica1y2MetodoNata {
                 for (int c = 1; c <= orden; c++) {
                     if (f == c) {
                     } else if (c < f) {
-                        suma = suma + ((matriz[f][c] * (-1.0)) * vact[c]);
+                        suma = suma + ((matriz[f][c] * -1.0) * vact[c]);
                     } else {
-                        suma = suma + ((matriz[f][c] * (-1.0)) * vant[c]);
+                        suma = suma + ((matriz[f][c] * -1.0) * vant[c]);
                     }
                 }
                 suma = suma / coef;
@@ -257,7 +251,7 @@ public class Practica1y2MetodoNata {
         if (errorTotal <= error) {
             System.out.println("\nResultados:");
             for (int p = 1; p <= orden; p++) {
-                System.out.println(concepto[p] + " = " + formato.format(vant[p]) + " " + unidad + " = " + formato.format(Math.round(vant[p])) + " " + unidad);
+                System.out.println(concepto[p] + " = " + formato.format(vact[p]) + " " + unidad + " = " + formato.format(Math.round(vact[p])) + " " + unidad);
             }
         } else {
             System.out.println("El proceso superó el número máximo de cálculos y no encontró la mejor aproximación.");
