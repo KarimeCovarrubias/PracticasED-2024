@@ -1,24 +1,21 @@
 package metodos;
 
-// CHECAR GAUSS-SEIDEL
-
 import java.util.Scanner;
 import java.text.DecimalFormat;
 import metodos.Keyboard;
 
 public class Practica3y4 {
     static Scanner leer = new Scanner(System.in);
-    static DecimalFormat formato = new DecimalFormat("#,###.###");
+    static DecimalFormat formato = new DecimalFormat("###,##0.000");
     public static void main(String[] args) {
-        System.out.println("\n\n\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
-                            "\n\t\t\tIng. En Sistemas Computacionales" +
+        System.out.println("\n\n\t\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
+                            "\n\t\t\t\t\t\tIng. En Sistemas Computacionales" +
                             "\n\nCovarrubias Osuna Dairy Karime." +
                             "\nSolución de ecuaciones." + 
-                            "\nDe 12:00 a 13:00 horas. ");
-        System.out.printf("\t%70s%n \t%70s%n \t%70s%n", "Este programa ejecuta la solución de problemas",
+                            "\nDe 12:00 a 13:00 horas. \n");
+        System.out.printf("\t\t\t\t\t%s%n \t\t\t\t\t%s%n \t\t\t\t\t%s%n", "Este programa ejecuta la solución de problemas",
                             "utilizando los procesos lógicos de Solución de sistemas",
-                            "de Ecuaciones utilizando diversos métodos numéricos.",
-                            "");
+                            "de Ecuaciones utilizando diversos métodos numéricos.");
         pantallaInicio();
     }
 
@@ -90,14 +87,14 @@ public class Practica3y4 {
         // Introducir datos
         datos(matrizA, orden);
 
-        System.out.println("\n\n\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
-                            "\n\t\t\tIng. En Sistemas Computacionales" +
+        System.out.println("\n\n\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
+                            "\n\t\t\t\t\tIng. En Sistemas Computacionales" +
                             "\n\nCovarrubias Osuna Dairy Karime." +
                             "\nSolución de ecuaciones." + 
-                            "\nDe 12:00 a 13:00 horas. " + "\nMétodo de Gauss-Jordan");
-        System.out.printf("\t%70s%n \t%70s%n \t%70s%n", "Este programa ejecuta la solución de problemas",
+                            "\nDe 12:00 a 13:00 horas." + "\nMétodo de Gauss-Jordan.\n");
+        System.out.printf("\t\t\t\t\t%s%n \t\t\t\t\t%s%n \t\t\t\t\t%s%n", "Este programa ejecuta la solución de problemas",
                             "utilizando los procesos lógicos de Solución de sistemas",
-                            "de Ecuaciones utilizando diversos métodos numéricos.");
+                            "de Ecuaciones utilizando diversos métodos numéricos.\n");
         System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
 
         // Impresión de la matriz capturada
@@ -142,20 +139,20 @@ public class Practica3y4 {
         //Resultados
         System.out.println("\nResultados:");
         for (int i = 1; i <= orden; i++) {
-            System.out.printf("%s = %.2f %s. \n", concepto[i], matrizA[i][orden+1], unidad);
+            System.out.printf("%s = %s %s. \n", concepto[i], formato.format(matrizA[i][orden+1]), unidad);
         }
     }
 
     static void imprimirMatriz(double[][] matrizA, int orden) {
-        System.out.println("-------------------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------------------------------------------");
         for (int f = 1; f <= orden; f++) {
             for (int c = 1; c <= orden; c++) {
-                System.out.printf("%-15.2f ", matrizA[f][c]);
+                System.out.printf("%-20s ", formato.format(matrizA[f][c]));
             }
             System.out.print("| ");
-            System.out.printf("%-15.2f\n", matrizA[f][orden + 1]);
+            System.out.printf("%-20s\n", formato.format(matrizA[f][orden + 1]));
         }
-        System.out.println("-------------------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------------------------------------------");
     }
 
 // ---------------------------------------------- MÉTODO GAUSS-SEIDEL ----------------------------------------------
@@ -192,23 +189,23 @@ public class Practica3y4 {
             }
         }
 
-        System.out.println("\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
-                            "\n\t\t\t\t\tIng. En Sistemas Computacionales" +
+        System.out.println("\n\n\t\t\t\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
+                            "\n\t\t\t\t\t\tIng. En Sistemas Computacionales" +
                             "\n\nCovarrubias Osuna Dairy Karime." +
                             "\nSolución de ecuaciones." + 
-                            "\nDe 12:00 a 13:00 horas." + "Método de Gauss-Seidel" +
-                            "\n\n\t\t\t\t\tEste programa ejecuta la solución de problemas" +
-                            "\n\t\t\t\t\tutilizando los procesos lógicos de Solución de sistemas" +
-                            "\n\t\t\t\t\tde Ecuaciones utilizando diversos métodos numéricos." +
-                            "\n\n");
+                            "\nDe 12:00 a 13:00 horas." + "\nMétodo de Gauss-Seidel.\n");
+        System.out.printf("\t\t\t\t\t%s%n \t\t\t\t\t%s%n \t\t\t\t\t%s%n", "Este programa ejecuta la solución de problemas",
+                            "utilizando los procesos lógicos de Solución de sistemas",
+                            "de Ecuaciones utilizando diversos métodos numéricos.\n");
         System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
 
         System.out.println();
         int nc = 0;
         double errorTotal = 0;
 
+        System.out.println("Valores iniciales:");
         for (int f = 1; f <= orden; f++) {
-            System.out.println(vant[f]);
+            System.out.println("x"+ f + " = " + vant[f]);
         }
         System.out.println("Error Total = " + errorTotal);
 
@@ -259,7 +256,7 @@ public class Practica3y4 {
         if (errorTotal <= error) {
             System.out.println("\nResultados:");
             for (int p = 1; p <= orden; p++) {
-                System.out.println(concepto[p] + " = " + formato.format(vact[p]) + " " + unidad + " = " + formato.format(Math.round(vact[p])) + " " + unidad);
+                System.out.println(concepto[p] + " = " + formato.format(vact[p]) + " = " + formato.format(Math.round(vact[p])) + " " + unidad+ ".");
             }
         } else {
             System.out.println("El proceso superó el número máximo de cálculos y no encontró la mejor aproximación.");
