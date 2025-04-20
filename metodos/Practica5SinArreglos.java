@@ -4,35 +4,35 @@ import java.util.Scanner;
 
 public class Practica5SinArreglos {
     static Scanner leer = new Scanner(System.in);
-    public static double funcion(double x) {
-        return Math.sqrt(3) * (1 - Math.pow(Math.sin(x), 2)) - Math.sin(x);
-    }
-
     public static void main(String[] args) {
-        double error, valorReal, errorCalculado;
-        int tProcesos, nProcesos = 1;
-        String pregunta;
+        double a, b, error, valorReal, dif, aCopia, h, ah, fa, fah, area, valorCalc;
+        int nTrapecios, tProcesos, nProcesos = 1, nFinalTrapecios;
+        String pregunta, unidad;
 
-        System.out.println("\n\n\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
-                            "\n\t\t\tIng. En Sistemas Computacionales" +
-                            "\n\nCovarrubias Osuna Dairy Karime." +
-                            "\nSolución de ecuaciones." + 
-                            "\nDe 12:00 a 13:00 horas." + "\nMétodo de Trapecios.\n");
-        System.out.printf("\t\t%s%n \t\t%s%n \t\t%s%n", "Este programa ejecuta la solución de problemas",
-                        "utilizando los procesos lógicos de Solución de sistemas",
-                        "de Ecuaciones utilizando diversos métodos numéricos.\n");
+        System.out.println("\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN");
+        System.out.println("\t\t\tIng. En Sistemas Computacionales.\n");
+        System.out.println("Covarrubias Osuna Dairy Karime.");
+        System.out.println("Métodos Numéricos.");
+        System.out.println("Integración numérica.");
+        System.out.println("Método de trapecios.");
+        System.out.println("Horario de 12:00 a 13:00 horas.\n");
+        System.out.println("\t\tEste programa resuelve problemas de integración");
+        System.out.println("\t\tutilizando el método de trapecios.\n");
 
         System.out.print("PREGUNTA DEL PROBLEMA: ");
         pregunta = Keyboard.readString();
 
-        System.out.print("Punto inicial (a): ");
-        double aInicial = leer.nextDouble();
+        System.out.print("UNIDAD: ");
+        unidad = Keyboard.readString();
 
-        System.out.print("Punto final (b): ");
-        double b = leer.nextDouble();
+        System.out.print("Límite inferior (a): ");
+        a = leer.nextDouble();
+
+        System.out.print("Límite superior (b): ");
+        b = leer.nextDouble();
 
         System.out.print("Número de trapecios inicial (n): ");
-        int n = leer.nextInt();
+        nTrapecios = leer.nextInt();
 
         System.out.print("Valor Real: ");
         valorReal = leer.nextDouble();
@@ -43,74 +43,57 @@ public class Practica5SinArreglos {
         System.out.print("Error: ");
         error = leer.nextDouble();
 
+        nFinalTrapecios = nTrapecios;
+
         do {
-            double h = (b - aInicial) / n;
-            double sumaTotal = 0;
+            h = (b - a) / nFinalTrapecios;
+            valorCalc = 0;
 
-            // Calculamos la suma sin imprimir
-            for (int i = 0; i < n; i++) {
-                double a = aInicial + i * h;
-                double ah = a + h;
-                double fa = funcion(a);
-                double fah = funcion(ah);
-                double area = (h / 2) * (fa + fah);
-                sumaTotal += area;
+            System.out.println("\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN");
+            System.out.println("\t\t\tIng. En Sistemas Computacionales.\n");
+            System.out.println("Covarrubias Osuna Dairy Karime.");
+            System.out.println("Métodos Numéricos.");
+            System.out.println("Integración numérica.");
+            System.out.println("Método de trapecios.");
+            System.out.println("Horario de 12:00 a 13:00 horas.\n");
+            System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
+
+            System.out.println(" __________________________________________________________________________________");
+            System.out.printf("| %-10s| %-12s| %-12s| %-12s| %-12s| %-12s|\n", "Trapecio", "a", "a+h", "f(a)", "f(a+h)", "Área");
+            System.out.println(" __________________________________________________________________________________");
+
+            for (int i = 0; i < nFinalTrapecios; i++) {
+                aCopia = a + i * h;
+                ah = aCopia + h;
+                fa = 2 + Math.sin(2 * Math.sqrt(aCopia));
+                fah = 2 + Math.sin(2 * Math.sqrt(ah));
+                area = (h / 2) * (fa + fah);
+                valorCalc += area;
+
+                System.out.printf("| %-10d| %-12.5f| %-12.5f| %-12.5f| %-12.5f| %-12.5f|\n", (i + 1), aCopia, ah, fa, fah, area);
             }
 
-            errorCalculado = Math.abs(sumaTotal - valorReal);
+            dif = Math.abs(valorReal - valorCalc);
 
-            if (errorCalculado > error) {
-                System.out.println("\nProceso #" + nProcesos);
-                System.out.println("Número de trapecios = " + n);
-                System.out.printf("Valor calculado = %.6f u²\n", sumaTotal);
-                System.out.printf("Error calculado = %.6f u²\n", errorCalculado);
-                n *= 2;
-                System.out.println("El error es mayor al permitido. Aumentando número de trapecios a " + n);
+            System.out.println(" __________________________________________________________________________________");
+
+            System.out.println("---------------------------------------------------------------------------------------");
+            System.out.println("\t\t\t\t--- Resultados Finales ---");
+            System.out.println("---------------------------------------------------------------------------------------");
+            System.out.println("Número inicial de trapecios = " + nTrapecios);
+            System.out.println("Número final de trapecios = " + nFinalTrapecios);
+            System.out.println("Número de procesos = " + nProcesos);
+            System.out.printf("Valor real de la integral = %.5f %s.\n", valorReal, unidad);
+            System.out.printf("Valor calculado por trapecios = %.5f %s.\n", valorCalc, unidad);
+            System.out.printf("Error del problema = %.5f %s.\n", error, unidad);
+            System.out.printf("Error del método = %.5f %s.\n", dif, unidad);
+
+            if (dif > error) {
+                nFinalTrapecios *= 2;
+                System.out.println("El error es mayor al permitido.");
+                System.out.println("__________________________________________________________________________________________________\n");
                 nProcesos++;
-            } else {
-                System.out.println("\n\n\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN" + 
-                            "\n\t\t\tIng. En Sistemas Computacionales" +
-                            "\n\nCovarrubias Osuna Dairy Karime." +
-                            "\nSolución de ecuaciones." + 
-                            "\nDe 12:00 a 13:00 horas." + "\nMétodo de Trapecios.\n");
-                System.out.printf("\t\t%s%n \t\t%s%n \t\t%s%n", "Este programa ejecuta la solución de problemas",
-                                "utilizando los procesos lógicos de Solución de sistemas",
-                                "de Ecuaciones utilizando diversos métodos numéricos.\n");
-                System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
-                // Imprimir tabla
-                System.out.println(" __________________________________________________________________________________");
-                System.out.printf("| %-10s| %-12s| %-12s| %-12s| %-12s| %-12s|\n",
-                        "Trapecio", "a", "a+h", "f(a)", "f(a+h)", "Área");
-                        System.out.println(" __________________________________________________________________________________");
-
-                double sumaVerificada = 0;
-                for (int i = 0; i < n; i++) {
-                    double a = aInicial + i * h;
-                    double ah = a + h;
-                    double fa = funcion(a);
-                    double fah = funcion(ah);
-                    double area = (h / 2) * (fa + fah);
-                    sumaVerificada += area;
-
-                    System.out.printf("| %-10d| %-12.6f| %-12.6f| %-12.6f| %-12.6f| %-12.6f|\n",
-                            (i + 1), a, ah, fa, fah, area);
-                }
-                System.out.println(" __________________________________________________________________________________");
-
-                // Resultados finales
-                System.out.println("---------------------------------------------------------------------------------------");
-                System.out.println("\t\t\t\t--- Resultados Finales ---");
-                System.out.println("---------------------------------------------------------------------------------------");
-                System.out.println("Punto inicial = " + aInicial);
-                System.out.println("Punto final = " + b);
-                System.out.println("Número de procesos = " + nProcesos);
-                System.out.printf("Valor real de la integral = %.6f u²\n", valorReal);
-                System.out.printf("Valor calculado por trapecios =  %.6f u²\n", sumaVerificada);
-                System.out.printf("Error permitido = %f u²\n", error);
-                System.out.printf("Error calculado = %.6f u²\n", errorCalculado);
-                break;
             }
-
-        } while (errorCalculado > error && nProcesos < tProcesos);
+        } while(dif > error && nProcesos <= tProcesos);
     }
 }
