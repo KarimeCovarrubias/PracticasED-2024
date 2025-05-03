@@ -18,6 +18,8 @@ public class MetodoSimpson {
         System.out.println("\t\tEste programa resuelve problemas de integración" + 
                             "\t\tutilizando el método de Simpson.\n");
 
+        //System.out.println("ECUACIÓN: 2 + Sen\u221a2\n");
+        System.out.println("ECUACIÓN: x^2 - 6x - 8\n");
         System.out.print("Pregunta del problema: ");
         pregunta = Keyboard.readString();
 
@@ -96,7 +98,7 @@ public class MetodoSimpson {
         fb = funcion(b);
 
         vCalc = ((1 * h) / 3) * (fa + (4 * fx1) + fb);
-        error = Math.abs(vReal - vCalc);
+        error = Math.abs(vReal - Math.abs(vCalc));
 
         System.out.println(" ____________________________________________________________________");
         System.out.printf("| %-10s| %-12s| %-12s| %-12s| %-12s|\n", "pxy", "x", "f(x)", "Factor", "Área");
@@ -124,7 +126,7 @@ public class MetodoSimpson {
         fb = funcion(b);
 
         vCalc = ((3 * h) / 8) * (fa + (3 * fx1) + (3 * fx2) + fb);
-        error = Math.abs(vReal - vCalc);
+        error = (vReal - Math.abs(vCalc));
 
         System.out.println(" ____________________________________________________________________");
         System.out.printf("| %-10s| %-12s| %-12s| %-12s| %-12s|\n", "pxy", "x", "f(x)", "Factor", "Área");
@@ -139,7 +141,7 @@ public class MetodoSimpson {
         System.out.printf("\nNo. de divisiones = %d", n);
         System.out.printf("\nValor Real de la Integral = %.4f %s", vReal, unidad);
         System.out.printf("\nValor por el Método = %.4f %s", Math.abs(vCalc), unidad);
-        System.out.printf("\nError del Método = %.4f %s\n", error, unidad);
+        System.out.printf("\nError del Método = %.4f %s\n", Math.abs(error), unidad);
     }
 
     public static void simpsonUnTercioComplejo(double a, double b, int n, double vReal, String unidad) {
@@ -195,7 +197,7 @@ public class MetodoSimpson {
         }
         System.out.println(" ____________________________________________________________________");
         vCalc = ((1 * h) / 3) * vCalc;
-        error = Math.abs(vReal - vCalc);
+        error = Math.abs(vReal - Math.abs(vCalc));
 
         System.out.printf("\nNo. de divisiones = %d", n);
         System.out.printf("\nValor Real de la Integral = %.4f %s", vReal, unidad);
@@ -256,7 +258,7 @@ public class MetodoSimpson {
         }
         System.out.println(" ____________________________________________________________________");
         vCalc = (3 * h / 8) * vCalc;
-        error = Math.abs(vReal - vCalc);
+        error = Math.abs(vReal - Math.abs(vCalc));
 
         System.out.printf("\nNo. de divisiones = %d", n);
         System.out.printf("\nValor Real de la Integral = %.4f %s", vReal, unidad);
