@@ -2,7 +2,9 @@
 // FALTA VER LO DEL VALOR CALCULADO (IMPRIME LOS VALORES EN NEGATIVO CUANDO SE DEBEN IMPRIMIR POSITIVO, LO QUE TAMBIÉN AFECTA AL ERROR)
 package metodos;
 
+import java.text.DecimalFormat;
 public class MetodoSimpson {
+    static DecimalFormat formato = new DecimalFormat("#,###.00000");
     public static void main(String[] args) {
         String pregunta, unidad;
         double vReal, a, b;
@@ -16,7 +18,7 @@ public class MetodoSimpson {
         System.out.println("Método de Simpson.");
         System.out.println("Horario de 12:00 a 13:00 horas.\n");
         System.out.println("\t\tEste programa resuelve problemas de integración" + 
-                            "\t\tutilizando el método de Simpson.\n");
+                            "\n\t\tutilizando el método de Simpson.\n");
 
         //System.out.println("ECUACIÓN: 2 + Sen\u221a2\n");
         System.out.println("ECUACIÓN: x^2 - 6x - 8\n");
@@ -74,7 +76,7 @@ public class MetodoSimpson {
     }
 
     public static double funcion(double x) {
-        return Math.pow(x, 2) - (6 * x) - 8; // f(x) = x^2 - 6x - 8
+        return (Math.pow(x, 3) - Math.sin(x + 1)); // f(x) = x^3 - sen(x + 1)
     }
 
     public static void encabezado(String pregunta) {
@@ -100,18 +102,18 @@ public class MetodoSimpson {
         vCalc = ((1 * h) / 3) * (fa + (4 * fx1) + fb);
         error = Math.abs(vReal - Math.abs(vCalc));
 
-        System.out.println(" ____________________________________________________________________");
-        System.out.printf("| %-10s| %-12s| %-12s| %-12s| %-12s|\n", "pxy", "x", "f(x)", "Factor", "Área");
-        System.out.println(" ____________________________________________________________________");
-        System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12d| %-12.4f|\n", 1, a, Math.abs(fa), 1, 1*Math.abs(fa));
-        System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12d| %-12.4f|\n", 2, x1, Math.abs(fx1), 4, 4*Math.abs(fx1));
-        System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12d| %-12.4f|\n", 3, b, Math.abs(fb), 1, 1*Math.abs(fb));
-        System.out.println(" ____________________________________________________________________");
+        System.out.println(" ________________________________________________________________________________");
+        System.out.printf("| %-10s| %-15s| %-15s| %-15s| %-15s|\n", "pxy", "x", "f(x)", "Factor", "Área");
+        System.out.println(" ________________________________________________________________________________");
+        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 1, a, formato.format(Math.abs(fa)), 1, formato.format(1*Math.abs(fa)));
+        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 2, x1, formato.format(Math.abs(fx1)), 4, formato.format(4*Math.abs(fx1)));
+        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 3, b, formato.format(Math.abs(fb)), 1, formato.format(1*Math.abs(fb)));
+        System.out.println(" ________________________________________________________________________________");
 
         System.out.printf("\nNo. de divisiones = %d", n);
-        System.out.printf("\nValor Real de la Integral = %.4f %s", vReal, unidad);
-        System.out.printf("\nValor por el Método = %.4f %s", Math.abs(vCalc), unidad);
-        System.out.printf("\nError del Método = %.4f %s\n", error, unidad);
+        System.out.printf("\nValor Real de la Integral = %s %s", formato.format(vReal), unidad);
+        System.out.printf("\nValor por el Método = %s %s", formato.format(vCalc), unidad);
+        System.out.printf("\nError del Método = %.6f %s\n", error, unidad);
     }
 
     public static void simpsonTresOctavosSimple(double a, double b, int n, double vReal, String unidad) {
@@ -126,34 +128,35 @@ public class MetodoSimpson {
         fb = funcion(b);
 
         vCalc = ((3 * h) / 8) * (fa + (3 * fx1) + (3 * fx2) + fb);
-        error = (vReal - Math.abs(vCalc));
+        error = Math.abs(vReal - Math.abs(vCalc));
 
-        System.out.println(" ____________________________________________________________________");
-        System.out.printf("| %-10s| %-12s| %-12s| %-12s| %-12s|\n", "pxy", "x", "f(x)", "Factor", "Área");
-        System.out.println(" ____________________________________________________________________");
+        System.out.println(" ________________________________________________________________________________");
+        System.out.printf("| %-10s| %-15s| %-15s| %-15s| %-15s|\n", "pxy", "x", "f(x)", "Factor", "Área");
+        System.out.println(" ________________________________________________________________________________");
         
-        System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12d| %-12.4f|\n", 1, a, Math.abs(fa), 1, 1*Math.abs(fa));
-        System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12d| %-12.4f|\n", 2, x1, Math.abs(fx1), 3, 3*Math.abs(fx1));
-        System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12d| %-12.4f|\n", 3, x2, Math.abs(fx2), 3, 3*Math.abs(fx2));
-        System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12d| %-12.4f|\n", 4, b, Math.abs(fb), 1, 1*Math.abs(fb));
-        System.out.println(" ____________________________________________________________________");
+        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 1, a, formato.format(Math.abs(fa)), 1, formato.format(1*Math.abs(fa)));
+        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 2, x1, formato.format(Math.abs(fx1)), 3, formato.format(3*Math.abs(fx1)));
+        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 3, x2, formato.format(Math.abs(fx2)), 3, formato.format(3*Math.abs(fx2)));
+        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 4, b, formato.format(Math.abs(fb)), 1, formato.format(1*Math.abs(fb)));
+        System.out.println(" ________________________________________________________________________________");
         
         System.out.printf("\nNo. de divisiones = %d", n);
-        System.out.printf("\nValor Real de la Integral = %.4f %s", vReal, unidad);
-        System.out.printf("\nValor por el Método = %.4f %s", Math.abs(vCalc), unidad);
-        System.out.printf("\nError del Método = %.4f %s\n", Math.abs(error), unidad);
+        System.out.printf("\nValor Real de la Integral = %s %s", formato.format(vReal), unidad);
+        System.out.printf("\nValor por el Método = %s %s", formato.format(vCalc), unidad);
+        System.out.printf("\nError del Método = %.6f %s\n", error, unidad);
     }
 
     public static void simpsonUnTercioComplejo(double a, double b, int n, double vReal, String unidad) {
-        double vCalc, h, ca, cb, factor, pto, fpto, valor, pos, res, error;
+        double vCalc, h, ca, cb, pto, fpto, valor, pos, res, error;
+        int factor;
         vCalc = 0;
         h = (b - a) / n;
         ca = a;
         cb = b;
 
-        System.out.println(" ____________________________________________________________________");
-        System.out.printf("| %-10s| %-12s| %-12s| %-12s| %-12s|\n", "xx", "pto", "fpto", "factor", "valor");
-        System.out.println(" ____________________________________________________________________");
+        System.out.println(" ________________________________________________________________________________");
+        System.out.printf("| %-10s| %-15s| %-15s| %-15s| %-15s|\n", "xx", "pto", "fpto", "factor", "valor");
+        System.out.println(" ________________________________________________________________________________");
         for (int x = 1; x <= n + 1; x++) {
             if (x == 1) {
                 factor = 1;;
@@ -162,7 +165,7 @@ public class MetodoSimpson {
                 valor = factor * fpto;
                 vCalc = vCalc + valor;
 
-                System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12.4f| %-12.4f|\n", x, pto, Math.abs(fpto), factor, Math.abs(valor));
+                System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", x, formato.format(pto), formato.format(Math.abs(fpto)), factor, formato.format(Math.abs(valor)));
             } 
             if (x == n + 1) {
                 factor = 1;
@@ -171,7 +174,7 @@ public class MetodoSimpson {
                 valor = factor * fpto;
                 vCalc = vCalc + valor;
 
-                System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12.4f| %-12.4f|\n", x, pto, Math.abs(fpto), factor, Math.abs(valor));
+                System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", x, formato.format(pto), formato.format(Math.abs(fpto)), factor, formato.format(Math.abs(valor)));
             } 
             if ((x > 1) && (x < n + 1)) {
                 pos = x - 1;
@@ -183,7 +186,7 @@ public class MetodoSimpson {
                     valor = factor * fpto;
                     vCalc = vCalc + valor;
 
-                    System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12.4f| %-12.4f|\n", x, pto, Math.abs(fpto), factor, Math.abs(valor));
+                    System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", x, formato.format(pto), formato.format(Math.abs(fpto)), factor, formato.format(Math.abs(valor)));
                 } else {
                     factor = 2;
                     pto = ca + (pos * h);
@@ -191,30 +194,31 @@ public class MetodoSimpson {
                     valor = factor * fpto;
                     vCalc = vCalc + valor;
 
-                    System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12.4f| %-12.4f|\n", x, pto, Math.abs(fpto), factor, Math.abs(valor));
+                    System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", x, formato.format(pto), formato.format(Math.abs(fpto)), factor, formato.format(Math.abs(valor)));
                 }
             }
         }
-        System.out.println(" ____________________________________________________________________");
+        System.out.println(" ________________________________________________________________________________");
         vCalc = ((1 * h) / 3) * vCalc;
         error = Math.abs(vReal - Math.abs(vCalc));
 
         System.out.printf("\nNo. de divisiones = %d", n);
-        System.out.printf("\nValor Real de la Integral = %.4f %s", vReal, unidad);
-        System.out.printf("\nValor por el Método = %.4f %s", Math.abs(vCalc), unidad);
-        System.out.printf("\nError del Método = %.4f %s\n", error, unidad);
+        System.out.printf("\nValor Real de la Integral = %s %s", formato.format(vReal), unidad);
+        System.out.printf("\nValor por el Método = %s %s", formato.format(vCalc), unidad);
+        System.out.printf("\nError del Método = %.6f %s\n", error, unidad);
     }
 
     public static void simpsonTresOctavosComplejo(double a, double b, int n, double vReal, String unidad) {
-        double vCalc, h, ca, cb, factor, pto, fpto, valor, pos, res, error;
+        double vCalc, h, ca, cb, pto, fpto, valor, pos, res, error;
+        int factor;
         vCalc = 0;
         h = (b - a) / n;
         ca = a;
         cb = b;
 
-        System.out.println(" ____________________________________________________________________");
-        System.out.printf("| %-10s| %-12s| %-12s| %-12s| %-12s|\n", "xx", "pto", "fpto", "factor", "valor");
-        System.out.println(" ____________________________________________________________________");
+        System.out.println(" ________________________________________________________________________________");
+        System.out.printf("| %-10s| %-15s| %-15s| %-15s| %-15s|\n", "xx", "pto", "fpto", "factor", "valor");
+        System.out.println(" ________________________________________________________________________________");
         for (int xx = 1; xx <= n + 1; xx++) {
             if (xx == 1) {
                 factor = 1;
@@ -223,7 +227,7 @@ public class MetodoSimpson {
                 valor = factor * fpto;
                 vCalc = vCalc + valor;
 
-                System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12.4f| %-12.4f|\n", xx, pto, Math.abs(fpto), factor, Math.abs(valor));
+                System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", xx, formato.format(pto), formato.format(Math.abs(fpto)), factor, formato.format(Math.abs(valor)));
             }
             if (xx == n + 1) {
                 factor = 1;
@@ -232,7 +236,7 @@ public class MetodoSimpson {
                 valor = factor * fpto;
                 vCalc = vCalc + valor;
 
-                System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12.4f| %-12.4f|\n", xx, pto, Math.abs(fpto), factor, Math.abs(valor));
+                System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", xx, formato.format(pto), formato.format(Math.abs(fpto)), factor, formato.format(Math.abs(valor)));
             }
             if (xx > 1 && xx < n + 1) {
                 pos = xx - 1;
@@ -244,7 +248,7 @@ public class MetodoSimpson {
                     valor = factor * fpto;
                     vCalc = vCalc + valor;
 
-                    System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12.4f| %-12.4f|\n", xx, pto, Math.abs(fpto), factor, Math.abs(valor));
+                    System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", xx, formato.format(pto), formato.format(Math.abs(fpto)), factor, formato.format(Math.abs(valor)));
                 } else {
                     factor = 3;
                     pto = ca + (pos * h);
@@ -252,17 +256,17 @@ public class MetodoSimpson {
                     valor = factor * fpto;
                     vCalc = vCalc + valor;
 
-                    System.out.printf("| %-10d| %-12.4f| %-12.4f| %-12.4f| %-12.4f|\n", xx, pto, Math.abs(fpto), factor, Math.abs(valor));
+                    System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", xx, formato.format(pto), formato.format(Math.abs(fpto)), factor, formato.format(Math.abs(valor)));
                 }
             }
         }
-        System.out.println(" ____________________________________________________________________");
+        System.out.println(" ________________________________________________________________________________");
         vCalc = (3 * h / 8) * vCalc;
         error = Math.abs(vReal - Math.abs(vCalc));
 
         System.out.printf("\nNo. de divisiones = %d", n);
-        System.out.printf("\nValor Real de la Integral = %.4f %s", vReal, unidad);
-        System.out.printf("\nValor por el Método = %.4f %s", Math.abs(vCalc), unidad);
-        System.out.printf("\nError del Método = %.4f %s\n", error, unidad);
+        System.out.printf("\nValor Real de la Integral = %s %s", formato.format(vReal), unidad);
+        System.out.printf("\nValor por el Método = %s %s", formato.format(vCalc), unidad);
+        System.out.printf("\nError del Método = %.6f %s\n", error, unidad);
     }
 }
