@@ -1,6 +1,6 @@
 // FALTA VER LO DEL ERROR (SUMA EN VEZ DE RESTAR, ES DECIR, IMPRIME CIEN Y TANTOS EN VEZ DE 0.000)
 // FALTA VER LO DEL VALOR CALCULADO (IMPRIME LOS VALORES EN NEGATIVO CUANDO SE DEBEN IMPRIMIR POSITIVO, LO QUE TAMBIÉN AFECTA AL ERROR)
-package metodos;
+
 
 import java.text.DecimalFormat;
 public class MetodoSimpson {
@@ -20,8 +20,7 @@ public class MetodoSimpson {
         System.out.println("\t\tEste programa resuelve problemas de integración" + 
                             "\n\t\tutilizando el método de Simpson.\n");
 
-        //System.out.println("ECUACIÓN: 2 + Sen\u221a2\n");
-        System.out.println("ECUACIÓN: x^2 - 6x - 8\n");
+        System.out.println("ECUACIÓN: x^3 - sen(x + 1)\n");
         System.out.print("Pregunta del problema: ");
         pregunta = Keyboard.readString();
 
@@ -38,7 +37,7 @@ public class MetodoSimpson {
         b = Keyboard.readDouble();
 
         do {
-            System.out.println("\n---------------------------------------------------------------------------------------------------");
+            System.out.println("\n___________________________________________________________________________________________________\n");
             System.out.println("\tRegla 1: n = 2" +
                                 "\n\tRegla 1: n = 3" +
                                 "\n\tRegla 1: n > 2  y  n = par" + 
@@ -75,39 +74,24 @@ public class MetodoSimpson {
         } while (n != 0);
     }
 
-    public static double funcion(double x) {
-        return (Math.pow(x, 3) - Math.sin(x + 1)); // f(x) = x^3 - sen(x + 1)
-    }
-
-    public static void encabezado(String pregunta) {
-        System.out.println("\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN");
-            System.out.println("\t\t\tIng. En Sistemas Computacionales.\n");
-            System.out.println("Covarrubias Osuna Dairy Karime.");
-            System.out.println("Métodos Numéricos.");
-            System.out.println("Integración numérica.");
-            System.out.println("Método de Simpson.");
-            System.out.println("Horario de 12:00 a 13:00 horas.\n");
-            System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
-    }
-
     public static void simpsonUnTercioSimple(double a, double b, int n, double vReal, String unidad) {
         double h, fa, x1, fx1, fb, vCalc, error;
         h = (b - a) / n;
 
-        fa = funcion(a); // ECUACION
+        fa = funcion(a);
         x1 = a + h;
         fx1 = funcion(x1);
         fb = funcion(b);
 
-        vCalc = ((1 * h) / 3) * (fa + (4 * fx1) + fb);
-        error = Math.abs(vReal - Math.abs(vCalc));
+        vCalc = Math.abs((1 * h) / 3) * (fa + (4 * fx1) + fb);
+        error = Math.abs(vReal - vCalc);
 
         System.out.println(" ________________________________________________________________________________");
         System.out.printf("| %-10s| %-15s| %-15s| %-15s| %-15s|\n", "pxy", "x", "f(x)", "Factor", "Área");
         System.out.println(" ________________________________________________________________________________");
-        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 1, a, formato.format(Math.abs(fa)), 1, formato.format(1*Math.abs(fa)));
-        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 2, x1, formato.format(Math.abs(fx1)), 4, formato.format(4*Math.abs(fx1)));
-        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 3, b, formato.format(Math.abs(fb)), 1, formato.format(1*Math.abs(fb)));
+        System.out.printf("| %-10d| %-15.5f| %-15s| %-15d| %-15s|\n", 1, a, formato.format(Math.abs(fa)), 1, formato.format(1*Math.abs(fa)));
+        System.out.printf("| %-10d| %-15.5f| %-15s| %-15d| %-15s|\n", 2, x1, formato.format(Math.abs(fx1)), 4, formato.format(4*Math.abs(fx1)));
+        System.out.printf("| %-10d| %-15.5f| %-15s| %-15d| %-15s|\n", 3, b, formato.format(Math.abs(fb)), 1, formato.format(1*Math.abs(fb)));
         System.out.println(" ________________________________________________________________________________");
 
         System.out.printf("\nNo. de divisiones = %d", n);
@@ -120,24 +104,24 @@ public class MetodoSimpson {
         double h, fa, x1, x2, fx1, fx2, fb, vCalc, error;
         h = (b - a) / n;
 
-        fa = funcion(a); // ECUACION
+        fa = funcion(a);
         x1 = a + (1 * h);
         x2 = a + (2 * h);
         fx1 = funcion(x1);
         fx2 = funcion(x2);
         fb = funcion(b);
 
-        vCalc = ((3 * h) / 8) * (fa + (3 * fx1) + (3 * fx2) + fb);
-        error = Math.abs(vReal - Math.abs(vCalc));
+        vCalc = Math.abs((3 * h) / 8) * (fa + (3 * fx1) + (3 * fx2) + fb);
+        error = Math.abs(vReal - vCalc);
 
         System.out.println(" ________________________________________________________________________________");
         System.out.printf("| %-10s| %-15s| %-15s| %-15s| %-15s|\n", "pxy", "x", "f(x)", "Factor", "Área");
         System.out.println(" ________________________________________________________________________________");
         
-        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 1, a, formato.format(Math.abs(fa)), 1, formato.format(1*Math.abs(fa)));
-        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 2, x1, formato.format(Math.abs(fx1)), 3, formato.format(3*Math.abs(fx1)));
-        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 3, x2, formato.format(Math.abs(fx2)), 3, formato.format(3*Math.abs(fx2)));
-        System.out.printf("| %-10d| %-15s| %-15s| %-15d| %-15s|\n", 4, b, formato.format(Math.abs(fb)), 1, formato.format(1*Math.abs(fb)));
+        System.out.printf("| %-10d| %-15.5f| %-15s| %-15d| %-15s|\n", 1, a, formato.format(Math.abs(fa)), 1, formato.format(1*Math.abs(fa)));
+        System.out.printf("| %-10d| %-15.5f| %-15s| %-15d| %-15s|\n", 2, x1, formato.format(Math.abs(fx1)), 3, formato.format(3*Math.abs(fx1)));
+        System.out.printf("| %-10d| %-15.5f| %-15s| %-15d| %-15s|\n", 3, x2, formato.format(Math.abs(fx2)), 3, formato.format(3*Math.abs(fx2)));
+        System.out.printf("| %-10d| %-15.5f| %-15s| %-15d| %-15s|\n", 4, b, formato.format(Math.abs(fb)), 1, formato.format(1*Math.abs(fb)));
         System.out.println(" ________________________________________________________________________________");
         
         System.out.printf("\nNo. de divisiones = %d", n);
@@ -161,7 +145,7 @@ public class MetodoSimpson {
             if (x == 1) {
                 factor = 1;;
                 pto = ca;
-                fpto = funcion(pto); // ECUACIÓN
+                fpto = funcion(pto);
                 valor = factor * fpto;
                 vCalc = vCalc + valor;
 
@@ -199,8 +183,8 @@ public class MetodoSimpson {
             }
         }
         System.out.println(" ________________________________________________________________________________");
-        vCalc = ((1 * h) / 3) * vCalc;
-        error = Math.abs(vReal - Math.abs(vCalc));
+        vCalc = Math.abs(((1 * h) / 3) * vCalc);
+        error = Math.abs(vReal - vCalc);
 
         System.out.printf("\nNo. de divisiones = %d", n);
         System.out.printf("\nValor Real de la Integral = %s %s", formato.format(vReal), unidad);
@@ -261,12 +245,27 @@ public class MetodoSimpson {
             }
         }
         System.out.println(" ________________________________________________________________________________");
-        vCalc = (3 * h / 8) * vCalc;
-        error = Math.abs(vReal - Math.abs(vCalc));
+        vCalc = Math.abs(3 * h / 8) * vCalc;
+        error = Math.abs(vReal - vCalc);
 
         System.out.printf("\nNo. de divisiones = %d", n);
         System.out.printf("\nValor Real de la Integral = %s %s", formato.format(vReal), unidad);
         System.out.printf("\nValor por el Método = %s %s", formato.format(vCalc), unidad);
         System.out.printf("\nError del Método = %.6f %s\n", error, unidad);
+    }
+
+    public static double funcion(double x) {
+        return (Math.pow(x, 3) - Math.sin(x + 1)); // f(x) = x^3 - sen(x + 1)
+    }
+
+    public static void encabezado(String pregunta) {
+        System.out.println("\t\t\tINSTITUTO TECNOLÓGICO DE CULIACÁN");
+            System.out.println("\t\t\tIng. En Sistemas Computacionales.\n");
+            System.out.println("Covarrubias Osuna Dairy Karime.");
+            System.out.println("Métodos Numéricos.");
+            System.out.println("Integración numérica.");
+            System.out.println("Método de Simpson.");
+            System.out.println("Horario de 12:00 a 13:00 horas.\n");
+            System.out.print("PREGUNTA: ¿" + pregunta + "?\n");
     }
 }
