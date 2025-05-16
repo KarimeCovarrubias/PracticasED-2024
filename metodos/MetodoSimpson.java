@@ -1,7 +1,3 @@
-// FALTA VER LO DEL ERROR (SUMA EN VEZ DE RESTAR, ES DECIR, IMPRIME CIEN Y TANTOS EN VEZ DE 0.000)
-// FALTA VER LO DEL VALOR CALCULADO (IMPRIME LOS VALORES EN NEGATIVO CUANDO SE DEBEN IMPRIMIR POSITIVO, LO QUE TAMBIÉN AFECTA AL ERROR)
-
-
 import java.text.DecimalFormat;
 public class MetodoSimpson {
     static DecimalFormat formato = new DecimalFormat("#,###.00000");
