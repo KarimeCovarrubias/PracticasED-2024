@@ -70,12 +70,10 @@ public class ATM {
                 case 2:
                     System.out.print("Saldo a retirar: ");
                     double retirarSaldo = Keyboard.readDouble();
-                    if (retirarSaldo > 0 && retirarSaldo <= cuenta.getHistorial().size()) {
-                        cuenta.retirar(retirarSaldo);
-                        System.out.println("✅ Retiro exitoso.");
-                    } else {
-                        System.out.println("❌ Fondos insuficientes o monto inválido.");
-                    }
+                    
+                    cuenta.retirar(retirarSaldo);
+                    System.out.println("✅ Retiro exitoso.");
+                    
                     break;
                 case 3:
                     cuenta.obtenerSaldo();

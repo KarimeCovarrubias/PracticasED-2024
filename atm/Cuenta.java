@@ -181,40 +181,39 @@ public class Cuenta {
 
     // Método principal para inicializar o cargar cuenta según nombre y apellido
     public void inicializarConCliente(String nombre, String apellidos) {
-        this.cliente = new Cliente(nombre, apellidos, generarNCliente(nombre, apellidos));
-        String claveArchivo = nombre.toLowerCase() + "_" + apellidos.toLowerCase();
+    this.cliente = new Cliente(nombre, apellidos, generarNCliente());
+    String claveArchivo = nombre.toLowerCase() + "_" + apellidos.toLowerCase();
 
-        // Ruta de carpeta para archivos
-        File carpetaHistorial = new File("atm/Historial");
-        File carpetaEdoCta = new File("atm/EdoCta");
+    File carpetaHistorial = new File("atm/Historial");
+    File carpetaEdoCta = new File("atm/EdoCta");
 
-        if (!carpetaHistorial.exists()) carpetaHistorial.mkdirs();
-        if (!carpetaEdoCta.exists()) carpetaEdoCta.mkdirs();
+    if (!carpetaHistorial.exists()) carpetaHistorial.mkdirs();
+    if (!carpetaEdoCta.exists()) carpetaEdoCta.mkdirs();
 
-        // Archivos para esta cuenta (con clave nombre_apellido)
-        File archivoHistorial = new File(carpetaHistorial, "Historial_" + claveArchivo + ".txt");
-        File archivoEstado = new File(carpetaEdoCta, "EdoCta_" + claveArchivo + ".txt");
+    File archivoHistorial = new File(carpetaHistorial, "Historial_" + claveArchivo + ".txt");
+    File archivoEstado = new File(carpetaEdoCta, "EdoCta_" + claveArchivo + ".txt");
 
-        if (archivoEstado.exists()) {
-            // Cargar estado y historial
-            System.out.println("✅ Se encontró cuenta existente, cargando datos...");
-            cargarEstadoCuenta(archivoEstado);
-            cargarHistorial(archivoHistorial);
-        } else {
-            // Crear nueva cuenta con número random
-            System.out.println("⚠️ No existe cuenta previa, creando nueva cuenta...");
-            this.numeroCuenta = generarNumeroCuenta();
-            this.pin = "";  // El PIN se pedirá luego o se seteará manualmente
-            this.saldo = 0;
-            this.historial = new ArrayList<>();
-            this.cuentaBloqueada = false;
-            this.intentos = 0;
-        }
+    if (archivoEstado.exists()) {
+        System.out.println("✅ Se encontró cuenta existente, cargando datos...");
+        cargarEstadoCuenta(archivoEstado);
+        cargarHistorial(archivoHistorial);
+    } else {
+        System.out.println("⚠️ No existe cuenta previa, creando nueva cuenta...");
+        this.numeroCuenta = generarNumeroCuenta();
+        this.pin = "";
+        this.saldo = 0;
+        this.historial = new ArrayList<>();
+        this.cuentaBloqueada = false;
+        this.intentos = 0;
     }
+}
 
-    // Genera número cliente simple con hash del nombre+apellido
-    private String generarNCliente(String nombre, String apellidos) {
-        return String.valueOf(Math.abs((nombre + apellidos).hashCode()));
+
+
+    private String generarNCliente() {
+        Random random = new Random();
+        int nClienteR = random.nextInt(100000);
+        return String.valueOf(nClienteR);
     }
 
     // Generar número de cuenta aleatorio 10 dígitos
@@ -274,8 +273,8 @@ public class Cuenta {
             escribir.write("---------------------------------------------------------------\n");
             escribir.write("\n\t\t---- Estado de Cuenta --- \n");
             escribir.write("---------------------------------------------------------------\n");
-            escribir.write("Nombre:" + cliente.getNombre() + "\n");
-            escribir.write("Aellidos: " + cliente.getApellidos() + "\n");
+            escribir.write("Nombre: " + cliente.getNombre() + "\n");
+            escribir.write("Apellidos: " + cliente.getApellidos() + "\n");
             escribir.write("Número de cliente: " + cliente.getnCliente() + "\n");
             escribir.write("Número de Cuenta: " + numeroCuenta + "\n");
             escribir.write("Saldo: " + formato.format(saldo) + "\n");
@@ -290,20 +289,75 @@ public class Cuenta {
 
     // Cargar estado de cuenta
     public void cargarEstadoCuenta(File archivo) {
+    if (archivo.exists()) {
         try (BufferedReader leer = new BufferedReader(new FileReader(archivo))) {
-            String nombre = leer.readLine();
-            String apellidos = leer.readLine();
-            String nCliente = leer.readLine();
+            String linea;
+            String nombre = null, apellidos = null, nCliente = null;
+            String numeroCuenta = null;
+            double saldo = 0;
+            boolean cuentaBloqueada = false;
+            int intentos = 0;
+            String pin = null;
+
+            while ((linea = leer.readLine()) != null) {
+                if (!linea.contains(": ")) continue; // Ignorar líneas sin ": "
+                String[] partes = linea.split(": ", 2);
+                if (partes.length < 2) continue;
+
+                String clave = partes[0].trim();
+                String valor = partes[1].trim();
+
+                switch (clave) {
+                    case "Nombre":
+                        nombre = valor;
+                        break;
+                    case "Apellidos":
+                        apellidos = valor;
+                        break;
+                    case "Número de cliente":
+                        nCliente = valor;
+                        break;
+                    case "Número de Cuenta":
+                        numeroCuenta = valor;
+                        break;
+                    case "Saldo":
+                        // Quitar comas y símbolos antes de parsear
+                        saldo = Double.parseDouble(valor.replace(",", "").replace("$", ""));
+                        break;
+                    case "¿Cuenta bloqueada?":
+                        cuentaBloqueada = Boolean.parseBoolean(valor);
+                        break;
+                    case "Intentos":
+                        intentos = Integer.parseInt(valor);
+                        break;
+                    case "PIN":
+                        pin = valor;
+                        break;
+                }
+            }
+
+            // Validar que se cargaron datos mínimos
+            if (nombre == null || apellidos == null || nCliente == null || numeroCuenta == null || pin == null) {
+                System.out.println("❌ Datos incompletos en archivo de estado de cuenta.");
+                return;
+            }
+
             this.cliente = new Cliente(nombre, apellidos, nCliente);
-            this.numeroCuenta = leer.readLine();
-            this.saldo = Double.parseDouble(leer.readLine());
-            this.cuentaBloqueada = Boolean.parseBoolean(leer.readLine());
-            this.intentos = Integer.parseInt(leer.readLine());
-            this.pin = leer.readLine();
-            this.historial = new ArrayList<>();
+            this.numeroCuenta = numeroCuenta;
+            this.saldo = saldo;
+            this.cuentaBloqueada = cuentaBloqueada;
+            this.intentos = intentos;
+            this.pin = pin;
+
             System.out.println("✅ Estado de cuenta cargado correctamente.");
-        } catch (IOException e) {
-            System.out.println("❌ Error al cargar estado de cuenta: " + e.getMessage());
+
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("❌ Error al cargar el estado de cuenta: " + e.getMessage());
         }
+    } else {
+        System.out.println("❌ No existe el archivo: " + archivo.getPath());
     }
+}
+
+
 }

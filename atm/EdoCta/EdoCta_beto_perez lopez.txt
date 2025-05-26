@@ -2,11 +2,11 @@
 
 		---- Estado de Cuenta --- 
 ---------------------------------------------------------------
-Nombre: Valeria
-Apellidos: Lopez Cabilla
-Número de cliente: 123456
-Número de Cuenta: 6082080761
-Saldo: 12,300.00
+Nombre: Beto
+Apellidos: Perez Lopez
+Número de cliente: null
+Número de Cuenta: 5337360897
+Saldo: 14,500.00
 ¿Cuenta bloqueada? false
 Intentos: 0
-PIN: 2345
+PIN: 1234
