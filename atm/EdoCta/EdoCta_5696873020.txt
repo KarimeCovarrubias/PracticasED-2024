@@ -1,0 +1,12 @@
+---------------------------------------------------------------
+
+
+---- Estado de Cuenta --- 
+---------------------------------------------------------------
+Nombre:Irina
+Aellidos: Villa
+Número de cliente: null
+Número de Cuenta: 5696873020
+Saldo: 14,234,838.00
+¿Cuenta bloqueada? false
+Intentos: 0

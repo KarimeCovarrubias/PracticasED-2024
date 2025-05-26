@@ -1,0 +1,12 @@
+---------------------------------------------------------------
+
+		---- Estado de Cuenta --- 
+---------------------------------------------------------------
+Nombre:Valeria
+Aellidos: Lopez
+Número de cliente: null
+Número de Cuenta: 4746185638
+Saldo: .00
+¿Cuenta bloqueada? false
+Intentos: 0
+PIN: Des

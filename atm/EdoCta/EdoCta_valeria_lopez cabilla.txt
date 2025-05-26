@@ -1,0 +1,12 @@
+---------------------------------------------------------------
+
+		---- Estado de Cuenta --- 
+---------------------------------------------------------------
+Nombre:Valeria
+Aellidos: Lopez Cabilla
+Número de cliente: null
+Número de Cuenta: 6082080761
+Saldo: 12,300.00
+¿Cuenta bloqueada? false
+Intentos: 0
+PIN: 2345
